@@ -1,2 +1,9 @@
-# zoombies-subquery
-Subquery of Zoombies data on Moonriver and moonbeam
+# Zoom token SubQL
+
+```
+yarn install
+yarn codegen
+yarn build
+docker-compose pull
+docker-compose up
+```
