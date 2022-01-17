@@ -23,3 +23,43 @@ type Approval @entity {
 
   contractAddress: String!
 }
+
+type LogCardTypeLoaded @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogCardMinted @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogPackOpened @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogSponsorLinked @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogSponsorReward @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogDailyReward @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogRewardBoosters @entity {
+	id: ID! # Transaction Hash
+
+}
+
+type LogSacrificeNFT @entity {
+	id: ID! # Transaction Hash
+
+}
