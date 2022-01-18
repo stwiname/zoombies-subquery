@@ -43,6 +43,8 @@ export class Transaction implements Entity {
         }
     }
 
+
+
     static create(record: Partial<Omit<Transaction, FunctionPropertyNames<Transaction>>> & Entity): Transaction {
         assert(typeof record.id === 'string', "id must be provided");
         let entity = new Transaction(record.id);
