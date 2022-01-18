@@ -3,6 +3,8 @@ import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
 
+
+
 export class LogRewardBoosters implements Entity {
 
     constructor(id: string) {
@@ -12,13 +14,9 @@ export class LogRewardBoosters implements Entity {
 
     public id: string;
 
-    public value: bigint;
+    public winner: string;
 
-    public owner: string;
-
-    public spender: string;
-
-    public contractAddress: string;
+    public boostersAwarded: bigint;
 
 
     async save(): Promise<void>{
@@ -40,6 +38,8 @@ export class LogRewardBoosters implements Entity {
             return;
         }
     }
+
+
 
     static create(record: Partial<Omit<LogRewardBoosters, FunctionPropertyNames<LogRewardBoosters>>> & Entity): LogRewardBoosters {
         assert(typeof record.id === 'string', "id must be provided");

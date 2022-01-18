@@ -3,6 +3,8 @@ import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
 
+
+
 export class Approval implements Entity {
 
     constructor(id: string) {
@@ -40,6 +42,8 @@ export class Approval implements Entity {
             return;
         }
     }
+
+
 
     static create(record: Partial<Omit<Approval, FunctionPropertyNames<Approval>>> & Entity): Approval {
         assert(typeof record.id === 'string', "id must be provided");

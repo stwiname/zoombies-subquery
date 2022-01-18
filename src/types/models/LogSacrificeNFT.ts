@@ -3,6 +3,8 @@ import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
 
+
+
 export class LogSacrificeNFT implements Entity {
 
     constructor(id: string) {
@@ -12,13 +14,13 @@ export class LogSacrificeNFT implements Entity {
 
     public id: string;
 
-    public value: bigint;
-
     public owner: string;
 
-    public spender: string;
+    public tokenId: bigint;
 
-    public contractAddress: string;
+    public cardTypeId: bigint;
+
+    public zoomGained: bigint;
 
 
     async save(): Promise<void>{
@@ -40,6 +42,8 @@ export class LogSacrificeNFT implements Entity {
             return;
         }
     }
+
+
 
     static create(record: Partial<Omit<LogSacrificeNFT, FunctionPropertyNames<LogSacrificeNFT>>> & Entity): LogSacrificeNFT {
         assert(typeof record.id === 'string', "id must be provided");
