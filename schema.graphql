@@ -5,3 +5,13 @@ type LogSponsorLinkedEntity @entity {
 
   affiliate: String!
 }
+
+type TransferEntity @entity {
+	id: ID!
+
+  from: String!
+
+  to: String!
+
+  tokenId: BigInt!
+}
