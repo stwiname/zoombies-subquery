@@ -1,28 +1,3 @@
-type Transaction @entity {
-
-  id: ID! # Transaction hash
-
-  value: BigInt!
-
-  to: String!
-
-  from: String!
-
-  contractAddress: String!
-}
-
-type Approval @entity {
-  id: ID! # Transaction hash
-
-  value: BigInt!
-
-  owner: String!
-
-  spender: String!
-
-  contractAddress: String!
-}
-
 # LogCardTypeLoaded(uint32 indexed cardTypeId, string cardName, uint editionTotal);
 
 type LogCardTypeLoaded @entity {

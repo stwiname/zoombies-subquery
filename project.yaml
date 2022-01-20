@@ -21,11 +21,11 @@ dataSources:
       file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
       options:
         # Must be a key of assets
-        abi: zoombies
+        abi: erc721
         ## The contract that emitted the event
         address: '0x08716e418e68564c96b68192e985762740728018' # Zoombies contract address
     assets:
-      zoombies:
+      erc721:
         file: './zoombies.json'
     mapping:
       file: './dist/index.js'
