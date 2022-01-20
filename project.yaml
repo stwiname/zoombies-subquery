@@ -16,7 +16,7 @@ network:
 
 dataSources:
   - kind: substrate/Moonbeam
-    startBlock: 442091 # startBlock number for Zoombies
+    startBlock: 1 # startBlock number for Zoombies
     processor:
       file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
       options:
