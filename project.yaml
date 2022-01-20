@@ -34,7 +34,7 @@ dataSources:
           kind: substrate/MoonbeamEvent
           filter:
             topics:
-              - LogSponsorLinked(address sponsor, address affiliate)
+              - LogSponsorLinked(address indexed sponsor, address indexed affiliate)
         - handler: handleTransferEvent
           kind: substrate/MoonbeamEvent
           filter:
