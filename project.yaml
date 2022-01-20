@@ -23,7 +23,7 @@ dataSources:
         # Must be a key of assets
         abi: erc721
         ## The contract that emitted the event
-        address: '0x08716e418e68564c96b68192e985762740728018' # Zoombies contract address
+        address: '0x08716e418e68564C96b68192E985762740728018' # Zoombies contract address
     assets:
       erc721:
         file: './zoombies.json'
