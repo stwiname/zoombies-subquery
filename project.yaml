@@ -34,7 +34,12 @@ dataSources:
           kind: substrate/MoonbeamEvent
           filter:
             topics:
-              - LogSponsorLinked(address indexed sponsor, address indexed affiliate)
+              - LogSponsorLinked(address sponsor, address affiliate)
+        - handler: handleLogCardMintedEvent
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
         - handler: handleTransferEvent
           kind: substrate/MoonbeamEvent
           filter:

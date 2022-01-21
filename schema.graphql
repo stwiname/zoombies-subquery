@@ -15,3 +15,15 @@ type TransferEntity @entity {
 
   tokenId: BigInt!
 }
+
+type LogCardMintedEntity @entity {
+  id: ID!
+
+  buyer: String!
+
+  tokenId: BigInt
+
+  cardTypeId: BigInt!
+
+  editionNumber: BigInt
+}

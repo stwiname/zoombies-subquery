@@ -1,9 +1,10 @@
-import {LogSponsorLinkedEntity, TransferEntity} from "../types";
+import {LogSponsorLinkedEntity, TransferEntity, LogCardMintedEntity} from "../types";
 import { MoonbeamEvent } from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber; };
 type LogSponsorLinkedEventArgs = [string, string] & { sponsor: string; affiliate: string; };
+type LogCardMintedEventArgs = [string, BigNumber, BigNumber, BigNumber] & { buyer: string; tokenId: BigNumber; cardTypeId: BigNumber; editionNumber: BigNumber; };
 
 export async function handleLogSponsorLinkedEvent(event: MoonbeamEvent<LogSponsorLinkedEventArgs>): Promise<void> {
     logger.warn("Chai log info handleLogSponsorLinkedEvent start!");
@@ -33,4 +34,22 @@ export async function handleTransferEvent(event: MoonbeamEvent<TransferEventArgs
 
 	await transferEntity_value.save();
     logger.warn("Chai log info handleTransferEvent end!");
+}
+
+export async function handleLogCardMintedEvent(event: MoonbeamEvent<LogCardMintedEventArgs>): Promise<void> {
+    logger.warn("Chai log info handleLogCardMintedEvent start!");
+	const logCardMintedEntity_value = new LogCardMintedEntity(event.transactionHash);
+
+    logger.warn("Chai log info handleLogCardMintedEvent start1!");
+    logCardMintedEntity_value.buyer = event.args.buyer;
+    logger.warn("Chai log info handleLogCardMintedEvent start2!");
+    logCardMintedEntity_value.cardTypeId = event.args.cardTypeId.toBigInt();
+    logger.warn("Chai log info handleLogCardMintedEvent start3!");
+    logCardMintedEntity_value.tokenId = event.args.tokenId.toBigInt();
+    logger.warn("Chai log info handleLogCardMintedEvent start4!");
+    logCardMintedEntity_value.editionNumber = event.args.editionNumber.toBigInt();
+    logger.warn("Chai log info handleLogCardMintedEvent start5!");
+
+	await logCardMintedEntity_value.save();
+    logger.warn("Chai log info handleLogCardMintedEvent end!");
 }
