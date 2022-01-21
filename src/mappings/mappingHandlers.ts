@@ -4,7 +4,7 @@ import { BigNumber } from "ethers";
 
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber; };
 type LogSponsorLinkedEventArgs = [string, string] & { sponsor: string; affiliate: string; };
-type LogCardMintedEventArgs = [string, BigNumber, BigNumber, BigNumber] & { buyer: string; tokenId: BigNumber; cardTypeId: BigNumber; editionNumber: BigNumber; };
+type LogCardMintedEventArgs = [string, BigNumber, number, BigNumber] & { buyer: string; tokenId: BigNumber; cardTypeId: number ; editionNumber: BigNumber; };
 
 export async function handleLogSponsorLinkedEvent(event: MoonbeamEvent<LogSponsorLinkedEventArgs>): Promise<void> {
     logger.warn("Chai log info handleLogSponsorLinkedEvent start!");
@@ -43,7 +43,7 @@ export async function handleLogCardMintedEvent(event: MoonbeamEvent<LogCardMinte
     logger.warn("Chai log info handleLogCardMintedEvent start1!");
     logCardMintedEntity_value.buyer = event.args.buyer;
     logger.warn("Chai log info handleLogCardMintedEvent start2!");
-    logCardMintedEntity_value.cardTypeId = event.args.cardTypeId.toBigInt();
+    logCardMintedEntity_value.cardTypeId = event.args.cardTypeId;
     logger.warn("Chai log info handleLogCardMintedEvent start3!");
     logCardMintedEntity_value.tokenId = event.args.tokenId.toBigInt();
     logger.warn("Chai log info handleLogCardMintedEvent start4!");
