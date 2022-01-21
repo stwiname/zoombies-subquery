@@ -21,9 +21,9 @@ type LogCardMintedEntity @entity {
 
   buyer: String!
 
-  tokenId: BigInt
+  tokenId: BigInt!
 
   cardTypeId: BigInt!
 
-  editionNumber: BigInt
+  editionNumber: BigInt!
 }
