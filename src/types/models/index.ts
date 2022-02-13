@@ -4,5 +4,3 @@
 
 export {Transaction} from "./Transaction"
 
-export {Approval} from "./Approval"
-

@@ -1,15 +1,14 @@
-import {Approval, Transaction} from "../types";
-import { MoonbeamEvent, MoonbeamCall } from '@subql/contract-processors/dist/moonbeam';
+import {Transaction} from "../types";
+import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
-type ApproveCallArgs = [string, BigNumber] & { _spender: string; _value: BigNumber; }
 
 export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
 logger.info("RYAN TX LOGS:");
-logger.info(event.blockTimestamp);
+logger.info(event.blockNumber);
     transaction.blockNumber = Math.trunc(event.blockNumber);
     transaction.value = event.args.value.toBigInt();
     transaction.from = event.args.from;
@@ -17,15 +16,4 @@ logger.info(event.blockTimestamp);
     transaction.contractAddress = event.address;
 
     await transaction.save();
-}
-
-export async function handleMoonriverCall(event: MoonbeamCall<ApproveCallArgs>): Promise<void> {
-    const approval = new Approval(event.hash);
-logger.info("Approval RYAN::::::::::::::",event);
-    approval.owner = event.from;
-    approval.value = event.args._value.toBigInt();
-    approval.spender = event.args._spender;
-    approval.contractAddress = event.to;
-
-    await approval.save();
 }
