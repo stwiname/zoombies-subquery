@@ -5,6 +5,8 @@ import assert from 'assert';
 
 
 
+type ApprovalProps = Omit<Approval, NonNullable<FunctionPropertyNames<Approval>>>;
+
 export class Approval implements Entity {
 
     constructor(id: string) {
@@ -37,7 +39,7 @@ export class Approval implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Approval entity without an ID");
         const record = await store.get('Approval', id.toString());
         if (record){
-            return Approval.create(record);
+            return Approval.create(record as ApprovalProps);
         }else{
             return;
         }
@@ -45,7 +47,7 @@ export class Approval implements Entity {
 
 
 
-    static create(record: Partial<Omit<Approval, FunctionPropertyNames<Approval>>> & Entity): Approval {
+    static create(record: ApprovalProps): Approval {
         assert(typeof record.id === 'string', "id must be provided");
         let entity = new Approval(record.id);
         Object.assign(entity,record);

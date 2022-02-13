@@ -5,6 +5,8 @@ import assert from 'assert';
 
 
 
+type TransactionProps = Omit<Transaction, NonNullable<FunctionPropertyNames<Transaction>>>;
+
 export class Transaction implements Entity {
 
     constructor(id: string) {
@@ -13,6 +15,8 @@ export class Transaction implements Entity {
 
 
     public id: string;
+
+    public blockNumber?: number;
 
     public value: bigint;
 
@@ -37,7 +41,7 @@ export class Transaction implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Transaction entity without an ID");
         const record = await store.get('Transaction', id.toString());
         if (record){
-            return Transaction.create(record);
+            return Transaction.create(record as TransactionProps);
         }else{
             return;
         }
@@ -45,7 +49,7 @@ export class Transaction implements Entity {
 
 
 
-    static create(record: Partial<Omit<Transaction, FunctionPropertyNames<Transaction>>> & Entity): Transaction {
+    static create(record: TransactionProps): Transaction {
         assert(typeof record.id === 'string', "id must be provided");
         let entity = new Transaction(record.id);
         Object.assign(entity,record);
