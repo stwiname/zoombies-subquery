@@ -1162,20 +1162,20 @@
     sequelize "^6.15.0"
     tar "^6.1.11"
 
-"@subql/contract-processors@^0.3.0":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@subql/contract-processors/-/contract-processors-0.3.2.tgz#caa55d8bade6c0cae54973a25d937e7e7d8c5a81"
-  integrity sha512-hnVZ+OcXxDeww0K2PzqMcGfnxjIoYF6zTB0xdWJJWSW2V0cyJPcIbx9hFXQavPMdBMNsBvsPfneff4/HtY6MhA==
+"@subql/contract-processors@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@subql/contract-processors/-/contract-processors-0.4.1.tgz#26caf72d5be252437834cd147a69a84e1a9f31bb"
+  integrity sha512-BbdlDcMPLRPavO+Xf3MVlpBgqi+bxCOr28JwMtTaBgamC/rnUO1aeGLHzJiLokZlTalJ4mAO/1GRJviR5aVD9g==
   dependencies:
-    "@subql/types" "0.10.1"
+    "@subql/types" "0.13.0"
     class-transformer "0.4.0"
     class-validator "^0.13.1"
     ethers "^5.5.1"
 
-"@subql/types@0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@subql/types/-/types-0.10.1.tgz#71d944b5b6abf95e994d6a649f3b9063fb334686"
-  integrity sha512-EeeXDsC0oppaeVUFbH0fNbpk25tRajm2NApnMK6lU4M4D++yIiYElncoU0JymgqKnFrEHVXLIFsFZ9pHoDZRHA==
+"@subql/types@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@subql/types/-/types-0.13.0.tgz#32f967ed1a61f685a41a4ff8f5c3399c1a72d39e"
+  integrity sha512-kT5maNJc1P/pAyVRUr1lXWKnHr395SozrqXeuehKaBae+5zrLns/7hBdAeSVw3fv1BRuApEtAExh60e5BmebBQ==
 
 "@subql/types@0.14.0", "@subql/types@latest":
   version "0.14.0"

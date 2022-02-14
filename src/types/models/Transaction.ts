@@ -18,6 +18,8 @@ export class Transaction implements Entity {
 
     public blockNumber?: number;
 
+    public blockTimestamp: Date;
+
     public value: bigint;
 
     public to: string;

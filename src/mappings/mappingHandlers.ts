@@ -7,9 +7,8 @@ type TransferEventArgs = [string, string, BigNumber] & { from: string; to: strin
 
 export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
-logger.info("RYAN TX LOGS:");
-logger.info(event.blockTimestamp);
     transaction.blockNumber = Math.trunc(event.blockNumber);
+    transaction.blockTimestamp = event.blockTimestamp;
     transaction.value = event.args.value.toBigInt();
     transaction.from = event.args.from;
     transaction.to = event.args.to;

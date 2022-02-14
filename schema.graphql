@@ -4,6 +4,8 @@ type Transaction @entity {
 
   blockNumber: Int
 
+  blockTimestamp: Date!
+
   value: BigInt!
 
   to: String!
