@@ -1,4 +1,4 @@
-import {Transaction,Sum} from "../types";
+import {Transaction,Sum,ZoomPerDay} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
@@ -9,6 +9,13 @@ function createSum(id: string): Sum {
   const entity = new Sum(id);
   entity.mintedTotal = BigInt(0);
   entity.burnedTotal = BigInt(0);
+  return entity;
+}
+
+function createTrackedPerDay(timestamp: string): ZoomPerDay {
+  const entity = new ZoomPerDay(timestamp);
+  entity.minted = BigInt(0);
+  entity.burned = BigInt(0);
   return entity;
 }
 
@@ -23,19 +30,30 @@ export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArg
     transaction.contractAddress = event.address;
     await transaction.save();
 
+    //Create entity to hold TOTAL minted/burned
     let entity = await Sum.get("1");
     if(entity === undefined){
       entity = createSum("1");
     }
 
+    //Create entity to hold Summary minted/burned Per Day
+    const date = Date.parse(new Date(transaction.blockTimestamp).toISOString().split('T')[0]).toString();
+
+    let zpd = await ZoomPerDay.get(date);
+    if(zpd === undefined){
+      zpd = createTrackedPerDay(date);
+    }
+
+    //Track our totals
     if(transaction.from == "0x0000000000000000000000000000000000000000") {
-      logger.info("logger.info:::::::L:L");
-      logger.info(entity.mintedTotal);
-        entity.mintedTotal = BigInt(entity.mintedTotal) + event.args.value.toBigInt();
+      entity.mintedTotal = BigInt(entity.mintedTotal) + event.args.value.toBigInt();
+      zpd.minted = BigInt(zpd.minted) + event.args.value.toBigInt();
     }
     if(transaction.to == "0x0000000000000000000000000000000000000000") {
       entity.burnedTotal = BigInt(entity.burnedTotal) + event.args.value.toBigInt();
+      zpd.burned = BigInt(zpd.burned) + event.args.value.toBigInt();
     }
 
     await entity.save();
+    await zpd.save();
 }

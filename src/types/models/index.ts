@@ -6,3 +6,5 @@ export {Transaction} from "./Transaction"
 
 export {Sum} from "./Sum"
 
+export {ZoomPerDay} from "./ZoomPerDay"
+

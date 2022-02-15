@@ -25,3 +25,13 @@ type Sum @entity {
   burnedTotal: BigInt
 
 }
+
+type ZoomPerDay @entity {
+
+  id: ID! #timestamp
+
+  minted: BigInt
+
+  burned: BigInt
+
+}
