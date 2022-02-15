@@ -4,3 +4,5 @@
 
 export {Transaction} from "./Transaction"
 
+export {Sum} from "./Sum"
+
