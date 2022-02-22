@@ -22,7 +22,11 @@ dataSources:
         # Must be a key of assets
         abi: {"erc20","erc721"}
         address: { "0x8bd5180Ccdd7AE4aF832c8C03e21Ce8484A128d4","0x08716e418e68564c96b68192e985762740728018"}
-    assets: {"erc20":"./erc20.abi.json","erc721":"./zoombies.json"}
+    assets:
+      erc20:
+        file: "./erc20.abi.json"
+      erc721:
+        file: "./zoombies.json"
     mapping:
       file: './dist/index.js'
       handlers:
@@ -49,57 +53,9 @@ dataSources:
               - null
               - null
               - null
-        # LogCardTypeLoaded(uint32 indexed cardTypeId, string cardName, uint editionTotal)
-        - handler: handleLogCardTypeLoadedEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogCardTypeLoaded(uint32 indexed cardTypeId, string cardName, uint editionTotal)
         # LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
         - handler: handleLogCardMintedEvent
           kind: substrate/MoonbeamEvent
           filter:
             topics:
               - LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
-        # LogPackOpened(address indexed buyer, uint8 rarity)
-        - handler: handleLogPackOpenedEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogPackOpened(address indexed buyer, uint8 rarity)
-        # LogSponsorLinked(address sponsor, address affiliate)
-        - handler: handleLogSponsorLinkedEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogSponsorLinked(address sponsor, address affiliate)
-        # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
-        - handler: handleLogSponsorRewardEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
-        # LogDailyReward(address player, uint newBoosterBalance)
-        - handler: handleLogDailyRewardEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogDailyReward(address player, uint newBoosterBalance)
-        # LogRewardBoosters(address winner, uint boostersAwarded)
-        - handler: handleLogRewardBoostersEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogRewardBoosters(address winner, uint boostersAwarded)
-        # LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
-        - handler: handleLogSacrificeNFTEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
-        # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
-        - handler: handleTransferEvent
-          kind: substrate/MoonbeamEvent
-          filter:
-            topics:
-              - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
