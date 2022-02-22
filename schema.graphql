@@ -45,7 +45,7 @@ type LogCardMinted @entity {
 
   tokenId: BigInt!
 
-  cardTypeId: BigInt!
+  cardTypeId: Int!
 
   editionNumber: BigInt!
 }

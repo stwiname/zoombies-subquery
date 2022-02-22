@@ -1,9 +1,10 @@
-import {Transaction,Sum,ZoomPerDay} from "../types";
+import {Transaction,Sum,ZoomPerDay,LogCardMinted} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
+type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
 
 function createSum(id: string): Sum {
   const entity = new Sum(id);
@@ -56,4 +57,16 @@ export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArg
 
     await entity.save();
     await zpd.save();
+}
+
+export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEventArgs>): Promise<void> {
+  const card = new LogCardMinted(event.transactionHash);
+  logger.info("handleLogCardMintedEvent");
+  logger.info(event.args.buyer);
+  card.buyer = event.args.buyer;
+  card.tokenId = event.args.tokenId;
+  card.cardTypeId = event.args.cardTypeId;
+  card.editionNumber = event.args.editionNumber;
+
+  await card.save();
 }

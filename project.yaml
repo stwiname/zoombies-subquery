@@ -7,7 +7,7 @@ schema:
   file: ./schema.graphql
 network:
   genesisHash: '0x401a1f9dca3da46f5c4091016c8a2f26dcea05865116b286f60f668207d1474b' # Genesis hash of Moonriver
-  endpoint: wss://moonriver.api.onfinality.io/public-ws
+  endpoint: wss://moonriver.api.onfinality.io/ws?apikey=2c862d3c-611b-42fb-be0c-638f60da7993
   dictionary: 'https://api.subquery.network/sq/subquery/moonriver-dictionary'
 
   chaintypes:
@@ -20,13 +20,11 @@ dataSources:
       file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
       options:
         # Must be a key of assets
-        abi: {"erc20","erc721"}
-        address: { "0x8bd5180Ccdd7AE4aF832c8C03e21Ce8484A128d4","0x08716e418e68564c96b68192e985762740728018"}
+        abi: "erc20"
+        address: "0x8bd5180Ccdd7AE4aF832c8C03e21Ce8484A128d4"
     assets:
       erc20:
         file: "./erc20.abi.json"
-      erc721:
-        file: "./zoombies.json"
     mapping:
       file: './dist/index.js'
       handlers:
@@ -53,6 +51,20 @@ dataSources:
               - null
               - null
               - null
+  - kind: substrate/Moonbeam
+    startBlock: 442090
+    processor:
+      file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
+      options:
+        # Must be a key of assets
+        abi: erc721
+        address: "0x08716e418e68564c96b68192e985762740728018"
+    assets:
+      erc721:
+        file: './zoombies.json'
+    mapping:
+      file: './dist/index.js'
+      handlers:
         # LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
         - handler: handleLogCardMintedEvent
           kind: substrate/MoonbeamEvent

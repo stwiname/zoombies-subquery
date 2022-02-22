@@ -20,7 +20,7 @@ export class LogCardMinted implements Entity {
 
     public tokenId: bigint;
 
-    public cardTypeId: bigint;
+    public cardTypeId: number;
 
     public editionNumber: bigint;
 
