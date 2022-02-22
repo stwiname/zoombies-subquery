@@ -8,3 +8,5 @@ export {Sum} from "./Sum"
 
 export {ZoomPerDay} from "./ZoomPerDay"
 
+export {LogCardMinted} from "./LogCardMinted"
+
