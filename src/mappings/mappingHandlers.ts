@@ -1,10 +1,11 @@
-import {Transaction,Sum,ZoomPerDay,LogCardMinted} from "../types";
+import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
 type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
+type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; }
 
 function createSum(id: string): Sum {
   const entity = new Sum(id);
@@ -69,4 +70,12 @@ export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEv
   card.editionNumber = event.args.editionNumber;
 
   await card.save();
+}
+
+export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpenedEventArgs>): Promise<void> {
+  const pack = new LogPackOpened(event.transactionHash);
+  pack.buyer = event.args.buyer;
+  pack.rarity = event.args.rarity;
+
+  await pack.save();
 }

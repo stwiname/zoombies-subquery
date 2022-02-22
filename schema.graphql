@@ -49,3 +49,11 @@ type LogCardMinted @entity {
 
   editionNumber: BigInt!
 }
+
+type LogPackOpened @entity {
+ id: ID!
+
+ buyer: String!
+
+ rarity: Int!
+}
