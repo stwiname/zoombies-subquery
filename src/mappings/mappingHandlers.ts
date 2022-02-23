@@ -1,11 +1,13 @@
-import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened} from "../types";
+import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened,LogSponsorReward} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
 type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
-type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; }
+type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; };
+type LogSponsorRewardEventArgs = [string, string, BigNumber] & {sponsor:string, affiliate:string, zoomReward:bigint};
+
 
 function createSum(id: string): Sum {
   const entity = new Sum(id);
@@ -78,4 +80,13 @@ export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpene
   pack.rarity = event.args.rarity;
 
   await pack.save();
+}
+
+export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponsorRewardEventArgs>): Promise<void> {
+  const reward = new LogSponsorReward(event.transactionHash);
+  reward.sponsor = event.args.sponsor;
+  reward.affiliate = event.args.affiliate;
+  reward.zoomReward = event.args.zoomReward;
+
+  await reward.save();
 }

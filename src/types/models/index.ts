@@ -12,3 +12,5 @@ export {LogCardMinted} from "./LogCardMinted"
 
 export {LogPackOpened} from "./LogPackOpened"
 
+export {LogSponsorReward} from "./LogSponsorReward"
+

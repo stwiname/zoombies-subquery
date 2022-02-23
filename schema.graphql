@@ -57,3 +57,13 @@ type LogPackOpened @entity {
 
  rarity: Int!
 }
+
+type LogSponsorReward @entity {
+  id:ID!
+
+  sponsor: String!
+
+  affiliate: String!
+
+  zoomReward: BigInt!
+}

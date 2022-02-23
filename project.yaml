@@ -77,12 +77,12 @@ dataSources:
           filter:
             topics:
               - LogPackOpened(address indexed buyer, uint8 rarity)
-        # # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
-        # - handler: handleLogSponsorRewardEvent
-        #   kind: substrate/MoonbeamEvent
-        #   filter:
-        #     topics:
-        #       - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
+        # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
+        - handler: handleLogSponsorRewardEvent
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
         # # LogDailyReward(address player, uint newBoosterBalance)
         # - handler: handleLogDailyRewardEvent
         #   kind: substrate/MoonbeamEvent
