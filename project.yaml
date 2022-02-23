@@ -83,12 +83,12 @@ dataSources:
           filter:
             topics:
               - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
-        # # LogDailyReward(address player, uint newBoosterBalance)
-        # - handler: handleLogDailyRewardEvent
-        #   kind: substrate/MoonbeamEvent
-        #   filter:
-        #     topics:
-        #       - LogDailyReward(address player, uint newBoosterBalance)
+        # LogDailyReward(address player, uint newBoosterBalance)
+        - handler: handleLogDailyRewardEvent
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - LogDailyReward(address player, uint newBoosterBalance)
         # # LogRewardBoosters(address winner, uint boostersAwarded)
         # - handler: handleLogRewardBoostersEvent
         #   kind: substrate/MoonbeamEvent

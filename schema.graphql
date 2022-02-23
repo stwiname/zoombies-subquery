@@ -67,3 +67,11 @@ type LogSponsorReward @entity {
 
   zoomReward: BigInt!
 }
+
+type LogDailyReward @entity {
+  id:ID!
+
+  player: String!
+
+  newBoosterBalance: BigInt!
+}

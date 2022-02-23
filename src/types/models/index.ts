@@ -14,3 +14,5 @@ export {LogPackOpened} from "./LogPackOpened"
 
 export {LogSponsorReward} from "./LogSponsorReward"
 
+export {LogDailyReward} from "./LogDailyReward"
+

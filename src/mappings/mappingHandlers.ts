@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened,LogSponsorReward} from "../types";
+import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened,LogSponsorReward,LogDailyReward} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
@@ -7,7 +7,7 @@ type TransferEventArgs = [string, string, BigNumber] & { from: string; to: strin
 type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
 type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; };
 type LogSponsorRewardEventArgs = [string, string, BigNumber] & {sponsor:string, affiliate:string, zoomReward:bigint};
-
+type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterBalance:bigint; };
 
 function createSum(id: string): Sum {
   const entity = new Sum(id);
@@ -22,7 +22,6 @@ function createTrackedPerDay(timestamp: string): ZoomPerDay {
   entity.burned = BigInt(0);
   return entity;
 }
-
 
 export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
@@ -87,6 +86,14 @@ export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponso
   reward.sponsor = event.args.sponsor;
   reward.affiliate = event.args.affiliate;
   reward.zoomReward = event.args.zoomReward;
+
+  await reward.save();
+}
+
+export async function handleLogDailyRewardEvent(event: MoonbeamEvent<LogDailyRewardEventArgs>): Promise<void> {
+  const reward = new LogDailyReward(event.transactionHash);
+  reward.player = event.args.player;
+  reward.newBoosterBalance = event.args.newBoosterBalance;
 
   await reward.save();
 }
