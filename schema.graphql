@@ -95,3 +95,13 @@ type LogSacrificeNFT @entity {
 
   zoomGained: BigInt!
 }
+
+type NftTransfer @entity {
+ id:ID!
+
+ from: String!
+
+ to: String!
+
+ tokenId: BigInt!
+}

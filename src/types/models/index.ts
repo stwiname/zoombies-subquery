@@ -20,3 +20,5 @@ export {LogRewardBooster} from "./LogRewardBooster"
 
 export {LogSacrificeNFT} from "./LogSacrificeNFT"
 
+export {NftTransfer} from "./NftTransfer"
+

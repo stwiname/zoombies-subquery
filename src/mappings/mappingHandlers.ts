@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT} from "../types";
+import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
@@ -10,6 +10,8 @@ type LogSponsorRewardEventArgs = [string, string, BigNumber] & {sponsor:string, 
 type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterBalance:bigint; };
 type LogRewardBoostersEventArgs = [string, BigNumber] & {winner:string, boostersAwarded:bigint; };
 type LogSacrificeNFTEventArgs = [string, BigNumber, BigNumber, BigNumber] & {owner:string, tokenId:bigint, cardTypeId:bigint, zoomGained:bigint; };
+type NFTTransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: bigint; };
+
 
 function createSum(id: string): Sum {
   const entity = new Sum(id);
@@ -114,4 +116,13 @@ export async function handleLogSacrificeNFTEvent(event: MoonbeamEvent<LogSacrifi
   sac.zoomGained = event.args.zoomGained;
 
   await sac.save();
+}
+
+export async function handleNFTTransferEvent(event: MoonbeamEvent<NFTTransferEventArgs>): Promise<void> {
+  const nftTransfer = new NftTransfer(event.transactionHash);
+  nftTransfer.from = event.args.from;
+  nftTransfer.to = event.args.to;
+  nftTransfer.tokenId = event.args.tokenId;
+
+  await nftTransfer.save();
 }

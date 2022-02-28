@@ -101,9 +101,9 @@ dataSources:
           filter:
             topics:
               - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
-        # # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
-        # - handler: handleTransferEvent
-        #   kind: substrate/MoonbeamEvent
-        #   filter:
-        #     topics:
-        #       - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+        # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+        - handler: handleNFTTransferEvent
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
