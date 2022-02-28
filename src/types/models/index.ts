@@ -16,3 +16,7 @@ export {LogSponsorReward} from "./LogSponsorReward"
 
 export {LogDailyReward} from "./LogDailyReward"
 
+export {LogRewardBooster} from "./LogRewardBooster"
+
+export {LogSacrificeNFT} from "./LogSacrificeNFT"
+

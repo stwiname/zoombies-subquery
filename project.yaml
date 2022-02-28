@@ -89,18 +89,18 @@ dataSources:
           filter:
             topics:
               - LogDailyReward(address player, uint newBoosterBalance)
-        # # LogRewardBoosters(address winner, uint boostersAwarded)
-        # - handler: handleLogRewardBoostersEvent
-        #   kind: substrate/MoonbeamEvent
-        #   filter:
-        #     topics:
-        #       - LogRewardBoosters(address winner, uint boostersAwarded)
-        # # LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
-        # - handler: handleLogSacrificeNFTEvent
-        #   kind: substrate/MoonbeamEvent
-        #   filter:
-        #     topics:
-        #       - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
+        # LogRewardBoosters(address winner, uint boostersAwarded)
+        - handler: handleLogRewardBoostersEvent
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - LogRewardBoosters(address winner, uint boostersAwarded)
+        # LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
+        - handler: handleLogSacrificeNFTEvent
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
         # # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
         # - handler: handleTransferEvent
         #   kind: substrate/MoonbeamEvent

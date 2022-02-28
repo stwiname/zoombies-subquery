@@ -75,3 +75,23 @@ type LogDailyReward @entity {
 
   newBoosterBalance: BigInt!
 }
+
+type LogRewardBooster @entity {
+  id: ID!
+
+  winner: String!
+
+  boostersAwarded: BigInt!
+}
+
+type LogSacrificeNFT @entity {
+  id:ID!
+
+  owner: String!
+
+  tokenId: BigInt!
+
+  cardTypeId: BigInt!
+
+  zoomGained: BigInt!
+}
