@@ -35,3 +35,73 @@ type ZoomPerDay @entity {
   burned: BigInt
 
 }
+
+# LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber);
+
+type LogCardMinted @entity {
+	id: ID! # Transaction Hash
+
+  buyer: String!
+
+  tokenId: BigInt!
+
+  cardTypeId: Int!
+
+  editionNumber: BigInt!
+}
+
+type LogPackOpened @entity {
+ id: ID!
+
+ buyer: String!
+
+ rarity: Int!
+}
+
+type LogSponsorReward @entity {
+  id:ID!
+
+  sponsor: String!
+
+  affiliate: String!
+
+  zoomReward: BigInt!
+}
+
+type LogDailyReward @entity {
+  id:ID!
+
+  player: String!
+
+  newBoosterBalance: BigInt!
+}
+
+type LogRewardBooster @entity {
+  id: ID!
+
+  winner: String!
+
+  boostersAwarded: BigInt!
+}
+
+type LogSacrificeNFT @entity {
+  id:ID!
+
+  owner: String!
+
+  tokenId: BigInt!
+
+  cardTypeId: BigInt!
+
+  zoomGained: BigInt!
+}
+
+type NftTransfer @entity {
+ id:ID!
+
+ from: String!
+
+ to: String!
+
+ tokenId: BigInt!
+}

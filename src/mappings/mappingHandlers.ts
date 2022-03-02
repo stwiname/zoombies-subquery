@@ -1,9 +1,17 @@
-import {Transaction,Sum,ZoomPerDay} from "../types";
+import {Transaction,Sum,ZoomPerDay,LogCardMinted,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer} from "../types";
 import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
 import { BigNumber } from "ethers";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
+type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
+type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; };
+type LogSponsorRewardEventArgs = [string, string, BigNumber] & {sponsor:string, affiliate:string, zoomReward:bigint};
+type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterBalance:bigint; };
+type LogRewardBoostersEventArgs = [string, BigNumber] & {winner:string, boostersAwarded:bigint; };
+type LogSacrificeNFTEventArgs = [string, BigNumber, BigNumber, BigNumber] & {owner:string, tokenId:bigint, cardTypeId:bigint, zoomGained:bigint; };
+type NFTTransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: bigint; };
+
 
 function createSum(id: string): Sum {
   const entity = new Sum(id);
@@ -18,7 +26,6 @@ function createTrackedPerDay(timestamp: string): ZoomPerDay {
   entity.burned = BigInt(0);
   return entity;
 }
-
 
 export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
@@ -56,4 +63,66 @@ export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArg
 
     await entity.save();
     await zpd.save();
+}
+
+export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEventArgs>): Promise<void> {
+  const card = new LogCardMinted(event.transactionHash);
+  card.buyer = event.args.buyer;
+  card.tokenId = event.args.tokenId;
+  card.cardTypeId = event.args.cardTypeId;
+  card.editionNumber = event.args.editionNumber;
+
+  await card.save();
+}
+
+export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpenedEventArgs>): Promise<void> {
+  const pack = new LogPackOpened(event.transactionHash);
+  pack.buyer = event.args.buyer;
+  pack.rarity = event.args.rarity;
+
+  await pack.save();
+}
+
+export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponsorRewardEventArgs>): Promise<void> {
+  const reward = new LogSponsorReward(event.transactionHash);
+  reward.sponsor = event.args.sponsor;
+  reward.affiliate = event.args.affiliate;
+  reward.zoomReward = event.args.zoomReward;
+
+  await reward.save();
+}
+
+export async function handleLogDailyRewardEvent(event: MoonbeamEvent<LogDailyRewardEventArgs>): Promise<void> {
+  const reward = new LogDailyReward(event.transactionHash);
+  reward.player = event.args.player;
+  reward.newBoosterBalance = event.args.newBoosterBalance;
+
+  await reward.save();
+}
+
+export async function handleLogRewardBoostersEvent(event: MoonbeamEvent<LogRewardBoostersEventArgs>): Promise<void> {
+  const reward = new LogRewardBooster(event.transactionHash);
+  reward.winner = event.args.winner;
+  reward.boostersAwarded = event.args.boostersAwarded;
+
+  await reward.save();
+}
+
+export async function handleLogSacrificeNFTEvent(event: MoonbeamEvent<LogSacrificeNFTEventArgs>): Promise<void> {
+  const sac = new LogSacrificeNFT(event.transactionHash);
+  sac.owner = event.args.owner;
+  sac.tokenId = event.args.tokenId;
+  sac.cardTypeId = event.args.cardTypeId;
+  sac.zoomGained = event.args.zoomGained;
+
+  await sac.save();
+}
+
+export async function handleNFTTransferEvent(event: MoonbeamEvent<NFTTransferEventArgs>): Promise<void> {
+  const nftTransfer = new NftTransfer(event.transactionHash);
+  nftTransfer.from = event.args.from;
+  nftTransfer.to = event.args.to;
+  nftTransfer.tokenId = event.args.tokenId;
+
+  await nftTransfer.save();
 }
