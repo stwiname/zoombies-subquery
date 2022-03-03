@@ -16,6 +16,10 @@ export class NftTransfer implements Entity {
 
     public id: string;
 
+    public blockNumber?: number;
+
+    public blockTimestamp: Date;
+
     public from: string;
 
     public to: string;

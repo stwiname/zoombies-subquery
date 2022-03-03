@@ -16,6 +16,10 @@ export class LogSacrificeNFT implements Entity {
 
     public id: string;
 
+    public blockNumber?: number;
+
+    public blockTimestamp: Date;
+
     public owner: string;
 
     public tokenId: bigint;

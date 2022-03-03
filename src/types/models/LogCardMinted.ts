@@ -16,6 +16,10 @@ export class LogCardMinted implements Entity {
 
     public id: string;
 
+    public blockNumber?: number;
+
+    public blockTimestamp: Date;
+
     public buyer: string;
 
     public tokenId: bigint;

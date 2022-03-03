@@ -16,6 +16,10 @@ export class LogPackOpened implements Entity {
 
     public id: string;
 
+    public blockNumber?: number;
+
+    public blockTimestamp: Date;
+
     public buyer: string;
 
     public rarity: number;

@@ -67,6 +67,8 @@ export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArg
 
 export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEventArgs>): Promise<void> {
   const card = new LogCardMinted(event.transactionHash);
+  card.blockNumber = event.blockNumber;
+  card.blockTimestamp = event.blockTimestamp;
   card.buyer = event.args.buyer;
   card.tokenId = event.args.tokenId;
   card.cardTypeId = event.args.cardTypeId;
@@ -77,6 +79,8 @@ export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEv
 
 export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpenedEventArgs>): Promise<void> {
   const pack = new LogPackOpened(event.transactionHash);
+  pack.blockNumber = event.blockNumber;
+  pack.blockTimestamp = event.blockTimestamp;
   pack.buyer = event.args.buyer;
   pack.rarity = event.args.rarity;
 
@@ -85,6 +89,8 @@ export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpene
 
 export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponsorRewardEventArgs>): Promise<void> {
   const reward = new LogSponsorReward(event.transactionHash);
+  reward.blockNumber = event.blockNumber;
+  reward.blockTimestamp = event.blockTimestamp;
   reward.sponsor = event.args.sponsor;
   reward.affiliate = event.args.affiliate;
   reward.zoomReward = event.args.zoomReward;
@@ -94,6 +100,8 @@ export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponso
 
 export async function handleLogDailyRewardEvent(event: MoonbeamEvent<LogDailyRewardEventArgs>): Promise<void> {
   const reward = new LogDailyReward(event.transactionHash);
+  reward.blockNumber = event.blockNumber;
+  reward.blockTimestamp = event.blockTimestamp;
   reward.player = event.args.player;
   reward.newBoosterBalance = event.args.newBoosterBalance;
 
@@ -102,6 +110,8 @@ export async function handleLogDailyRewardEvent(event: MoonbeamEvent<LogDailyRew
 
 export async function handleLogRewardBoostersEvent(event: MoonbeamEvent<LogRewardBoostersEventArgs>): Promise<void> {
   const reward = new LogRewardBooster(event.transactionHash);
+  reward.blockNumber = event.blockNumber;
+  reward.blockTimestamp = event.blockTimestamp;
   reward.winner = event.args.winner;
   reward.boostersAwarded = event.args.boostersAwarded;
 
@@ -110,6 +120,8 @@ export async function handleLogRewardBoostersEvent(event: MoonbeamEvent<LogRewar
 
 export async function handleLogSacrificeNFTEvent(event: MoonbeamEvent<LogSacrificeNFTEventArgs>): Promise<void> {
   const sac = new LogSacrificeNFT(event.transactionHash);
+  sac.blockNumber = event.blockNumber;
+  sac.blockTimestamp = event.blockTimestamp;
   sac.owner = event.args.owner;
   sac.tokenId = event.args.tokenId;
   sac.cardTypeId = event.args.cardTypeId;
@@ -120,6 +132,8 @@ export async function handleLogSacrificeNFTEvent(event: MoonbeamEvent<LogSacrifi
 
 export async function handleNFTTransferEvent(event: MoonbeamEvent<NFTTransferEventArgs>): Promise<void> {
   const nftTransfer = new NftTransfer(event.transactionHash);
+  nftTransfer.blockNumber = event.blockNumber;
+  nftTransfer.blockTimestamp = event.blockTimestamp;
   nftTransfer.from = event.args.from;
   nftTransfer.to = event.args.to;
   nftTransfer.tokenId = event.args.tokenId;

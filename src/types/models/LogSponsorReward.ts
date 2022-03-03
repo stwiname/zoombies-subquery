@@ -16,6 +16,10 @@ export class LogSponsorReward implements Entity {
 
     public id: string;
 
+    public blockNumber?: number;
+
+    public blockTimestamp: Date;
+
     public sponsor: string;
 
     public affiliate: string;

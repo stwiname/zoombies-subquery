@@ -41,6 +41,10 @@ type ZoomPerDay @entity {
 type LogCardMinted @entity {
 	id: ID! # Transaction Hash
 
+  blockNumber: Int
+
+  blockTimestamp: Date!
+
   buyer: String!
 
   tokenId: BigInt!
@@ -53,6 +57,10 @@ type LogCardMinted @entity {
 type LogPackOpened @entity {
  id: ID!
 
+ blockNumber: Int
+
+ blockTimestamp: Date!
+
  buyer: String!
 
  rarity: Int!
@@ -60,6 +68,10 @@ type LogPackOpened @entity {
 
 type LogSponsorReward @entity {
   id:ID!
+
+  blockNumber: Int
+
+  blockTimestamp: Date!
 
   sponsor: String!
 
@@ -71,6 +83,10 @@ type LogSponsorReward @entity {
 type LogDailyReward @entity {
   id:ID!
 
+  blockNumber: Int
+
+  blockTimestamp: Date!
+
   player: String!
 
   newBoosterBalance: BigInt!
@@ -79,6 +95,10 @@ type LogDailyReward @entity {
 type LogRewardBooster @entity {
   id: ID!
 
+  blockNumber: Int
+
+  blockTimestamp: Date!
+
   winner: String!
 
   boostersAwarded: BigInt!
@@ -86,6 +106,10 @@ type LogRewardBooster @entity {
 
 type LogSacrificeNFT @entity {
   id:ID!
+
+  blockNumber: Int
+
+  blockTimestamp: Date!
 
   owner: String!
 
@@ -98,6 +122,10 @@ type LogSacrificeNFT @entity {
 
 type NftTransfer @entity {
  id:ID!
+
+ blockNumber: Int
+
+ blockTimestamp: Date!
 
  from: String!
 

@@ -16,6 +16,10 @@ export class LogRewardBooster implements Entity {
 
     public id: string;
 
+    public blockNumber?: number;
+
+    public blockTimestamp: Date;
+
     public winner: string;
 
     public boostersAwarded: bigint;
