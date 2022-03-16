@@ -26,7 +26,8 @@
   "dependencies": {
     "@subql/contract-processors": "^0.5.0",
     "@subql/types": "latest",
-    "ethers": "^5.5.0"
+    "ethers": "^5.5.0",
+    "whatwg-url": "^11.0.0"
   },
   "exports": {
     "chaintypes": "src/chaintypes.ts"
