@@ -36,8 +36,6 @@ type ZoomPerDay @entity {
 
 }
 
-# LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber);
-
 type LogCardMinted @entity {
 	id: ID! # Transaction Hash
 
@@ -52,6 +50,15 @@ type LogCardMinted @entity {
   cardTypeId: Int!
 
   editionNumber: BigInt!
+}
+
+type MintedType @entity {
+  id: ID!
+
+  blockTimestamp: Date!
+
+  cardTypeId: Int!
+
 }
 
 type LogPackOpened @entity {
