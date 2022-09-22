@@ -1,9 +1,10 @@
 # Zoom token SubQL
 
+Sometimes you may need to remove .data/* and yarn.lock
+
 ```
 yarn install
 yarn codegen
 yarn build
-docker-compose pull
-docker-compose up
+yarn start:docker
 ```

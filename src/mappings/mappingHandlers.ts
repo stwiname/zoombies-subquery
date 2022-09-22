@@ -1,5 +1,8 @@
 import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardMinted,MintedType,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer} from "../types";
-import { MoonbeamEvent} from '@subql/contract-processors/dist/moonbeam';
+import {
+  FrontierEvmEvent,
+  FrontierEvmCall,
+} from "@subql/frontier-evm-processor";
 import { BigNumber } from "ethers";
 
 // Setup types from ABI
@@ -50,7 +53,7 @@ function createMintedTypes(cardTypeId: string): MintedType {
   return
 }
 
-export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArgs>): Promise<void> {
+export async function handleMoonriverEvent(event: FrontierEvmEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
     transaction.blockNumber = Math.trunc(event.blockNumber);
     transaction.blockTimestamp = event.blockTimestamp;
@@ -88,7 +91,7 @@ export async function handleMoonriverEvent(event: MoonbeamEvent<TransferEventArg
     await zpd.save();
 }
 
-export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEventArgs>): Promise<void> {
+export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>): Promise<void> {
   const card = new LogCardMinted(event.transactionHash);
   card.blockNumber = event.blockNumber;
   card.blockTimestamp = event.blockTimestamp;
@@ -117,7 +120,7 @@ export async function handleLogCardMintedEvent(event: MoonbeamEvent<CardMintedEv
   await npd.save();
 }
 
-export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpenedEventArgs>): Promise<void> {
+export async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEventArgs>): Promise<void> {
   const pack = new LogPackOpened(event.transactionHash);
   pack.blockNumber = event.blockNumber;
   pack.blockTimestamp = event.blockTimestamp;
@@ -160,7 +163,7 @@ export async function handleLogPackOpenedEvent(event: MoonbeamEvent<LogPackOpene
   await rpd.save();
 }
 
-export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponsorRewardEventArgs>): Promise<void> {
+export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>): Promise<void> {
   const reward = new LogSponsorReward(event.transactionHash);
   reward.blockNumber = event.blockNumber;
   reward.blockTimestamp = event.blockTimestamp;
@@ -171,7 +174,7 @@ export async function handleLogSponsorRewardEvent(event: MoonbeamEvent<LogSponso
   await reward.save();
 }
 
-export async function handleLogDailyRewardEvent(event: MoonbeamEvent<LogDailyRewardEventArgs>): Promise<void> {
+export async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>): Promise<void> {
   const reward = new LogDailyReward(event.transactionHash);
   reward.blockNumber = event.blockNumber;
   reward.blockTimestamp = event.blockTimestamp;
@@ -181,7 +184,7 @@ export async function handleLogDailyRewardEvent(event: MoonbeamEvent<LogDailyRew
   await reward.save();
 }
 
-export async function handleLogRewardBoostersEvent(event: MoonbeamEvent<LogRewardBoostersEventArgs>): Promise<void> {
+export async function handleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoostersEventArgs>): Promise<void> {
   const reward = new LogRewardBooster(event.transactionHash);
   reward.blockNumber = event.blockNumber;
   reward.blockTimestamp = event.blockTimestamp;
@@ -191,7 +194,7 @@ export async function handleLogRewardBoostersEvent(event: MoonbeamEvent<LogRewar
   await reward.save();
 }
 
-export async function handleLogSacrificeNFTEvent(event: MoonbeamEvent<LogSacrificeNFTEventArgs>): Promise<void> {
+export async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNFTEventArgs>): Promise<void> {
   const sac = new LogSacrificeNFT(event.transactionHash);
   sac.blockNumber = event.blockNumber;
   sac.blockTimestamp = event.blockTimestamp;
@@ -203,7 +206,7 @@ export async function handleLogSacrificeNFTEvent(event: MoonbeamEvent<LogSacrifi
   await sac.save();
 }
 
-export async function handleNFTTransferEvent(event: MoonbeamEvent<NFTTransferEventArgs>): Promise<void> {
+export async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventArgs>): Promise<void> {
   const nftTransfer = new NftTransfer(event.transactionHash);
   nftTransfer.blockNumber = event.blockNumber;
   nftTransfer.blockTimestamp = event.blockTimestamp;

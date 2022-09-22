@@ -1,23 +1,29 @@
-specVersion: 0.2.0
+specVersion: 1.0.0
 name: zoombies-subquery
 version: 1.0.0
+runner:
+  node:
+    name: "@subql/node"
+    version: ">=0.35.0"
+  query:
+    name: "@subql/query"
+    version: ">=0.16.0"
 description: Zoom Token mint, burn and approvals, Zoombies NFT events on Moonriver
 repository: https://github.com/ryanprice/zoombies-subquery
 schema:
   file: ./schema.graphql
 network:
   genesisHash: '0x401a1f9dca3da46f5c4091016c8a2f26dcea05865116b286f60f668207d1474b' # Genesis hash of Moonriver
-  endpoint: wss://wss.api.moonriver.moonbeam.network
-  dictionary: 'https://api.subquery.network/sq/subquery/moonriver-dictionary'
-
+  endpoint: "wss://moonriver.api.onfinality.io/public-ws"
+  dictionary: "https://api.subquery.network/sq/subquery/moonriver-dictionary"
   chaintypes:
-    file: "./types.yaml"
+    file: ./dist/chaintypes.js
 
 dataSources:
-  - kind: substrate/Moonbeam
+  - kind: substrate/FrontierEvm
     startBlock: 442090
     processor:
-      file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
+      file: ./node_modules/@subql/frontier-evm-processor/dist/bundle.js
       options:
         # Must be a key of assets
         abi: "erc20"
@@ -29,7 +35,7 @@ dataSources:
       file: './dist/index.js'
       handlers:
         - handler: handleMoonriverEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             ## Topics that follow Ethereum JSON-RPC log filters
             ## https://docs.ethers.io/v5/concepts/events/
@@ -51,10 +57,10 @@ dataSources:
               - null
               - null
               - null
-  - kind: substrate/Moonbeam
+  - kind: substrate/FrontierEvm
     startBlock: 442090
     processor:
-      file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
+      file: './node_modules/@subql/frontier-evm-processor/dist/bundle.js'
       options:
         # Must be a key of assets
         abi: erc721
@@ -67,43 +73,43 @@ dataSources:
       handlers:
         # LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
         - handler: handleLogCardMintedEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
         # LogPackOpened(address indexed buyer, uint8 rarity)
         - handler: handleLogPackOpenedEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogPackOpened(address indexed buyer, uint8 rarity)
         # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
         - handler: handleLogSponsorRewardEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
         # LogDailyReward(address player, uint newBoosterBalance)
         - handler: handleLogDailyRewardEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogDailyReward(address player, uint newBoosterBalance)
         # LogRewardBoosters(address winner, uint boostersAwarded)
         - handler: handleLogRewardBoostersEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogRewardBoosters(address winner, uint boostersAwarded)
         # LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
         - handler: handleLogSacrificeNFTEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
         # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
         - handler: handleNFTTransferEvent
-          kind: substrate/MoonbeamEvent
+          kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
