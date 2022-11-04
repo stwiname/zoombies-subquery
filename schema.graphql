@@ -26,6 +26,12 @@ type Sum @entity {
 
 }
 
+type NFTHolders @entity {
+
+  id: ID! # holder wallet address
+
+}
+
 type ZoomPerDay @entity {
 
   id: ID! #timestamp
