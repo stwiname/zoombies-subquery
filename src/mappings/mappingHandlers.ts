@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardMinted,MintedType,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer} from "../types";
+import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardMinted,MintedType,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -52,6 +52,11 @@ function createMintedTypes(cardTypeId: string): MintedType {
   const entity = new MintedType(cardTypeId);
   return
 }
+
+function createNFTHolders(wallet: string): NFTHolders {
+  const entity = new NFTHolders(wallet);
+  return entity;
+ }
 
 export async function handleMoonriverEvent(event: FrontierEvmEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
@@ -215,4 +220,11 @@ export async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransfer
   nftTransfer.tokenId = event.args.tokenId;
 
   await nftTransfer.save();
+
+  let isHolder = await NFTHolders.get(nftTransfer.to);
+  if(isHolder === undefined){
+    isHolder = createNFTHolders(nftTransfer.to);
+  }
+
+  await isHolder.save();
 }

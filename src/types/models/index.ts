@@ -6,6 +6,8 @@ export {Transaction} from "./Transaction"
 
 export {Sum} from "./Sum"
 
+export {NFTHolders} from "./NFTHolders"
+
 export {ZoomPerDay} from "./ZoomPerDay"
 
 export {NFTPerDay} from "./NFTPerDay"
