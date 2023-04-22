@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type MintedTypeProps = Omit<MintedType, NonNullable<FunctionPropertyNames<MintedType>>>;
+export type MintedTypeProps = Omit<MintedType, NonNullable<FunctionPropertyNames<MintedType>>| '_name'>;
 
 export class MintedType implements Entity {
 
@@ -21,6 +21,10 @@ export class MintedType implements Entity {
     public cardTypeId: number;
 
 
+    get _name(): string {
+        return 'MintedType';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save MintedType entity without an ID");
@@ -35,7 +39,7 @@ export class MintedType implements Entity {
         assert((id !== null && id !== undefined), "Cannot get MintedType entity without an ID");
         const record = await store.get('MintedType', id.toString());
         if (record){
-            return MintedType.create(record as MintedTypeProps);
+            return this.create(record as MintedTypeProps);
         }else{
             return;
         }
@@ -45,7 +49,7 @@ export class MintedType implements Entity {
 
     static create(record: MintedTypeProps): MintedType {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new MintedType(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

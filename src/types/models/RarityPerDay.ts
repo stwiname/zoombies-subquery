@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type RarityPerDayProps = Omit<RarityPerDay, NonNullable<FunctionPropertyNames<RarityPerDay>>>;
+export type RarityPerDayProps = Omit<RarityPerDay, NonNullable<FunctionPropertyNames<RarityPerDay>>| '_name'>;
 
 export class RarityPerDay implements Entity {
 
@@ -29,6 +29,10 @@ export class RarityPerDay implements Entity {
     public common?: bigint;
 
 
+    get _name(): string {
+        return 'RarityPerDay';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save RarityPerDay entity without an ID");
@@ -43,7 +47,7 @@ export class RarityPerDay implements Entity {
         assert((id !== null && id !== undefined), "Cannot get RarityPerDay entity without an ID");
         const record = await store.get('RarityPerDay', id.toString());
         if (record){
-            return RarityPerDay.create(record as RarityPerDayProps);
+            return this.create(record as RarityPerDayProps);
         }else{
             return;
         }
@@ -53,7 +57,7 @@ export class RarityPerDay implements Entity {
 
     static create(record: RarityPerDayProps): RarityPerDay {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new RarityPerDay(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

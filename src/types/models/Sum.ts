@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type SumProps = Omit<Sum, NonNullable<FunctionPropertyNames<Sum>>>;
+export type SumProps = Omit<Sum, NonNullable<FunctionPropertyNames<Sum>>| '_name'>;
 
 export class Sum implements Entity {
 
@@ -21,6 +21,10 @@ export class Sum implements Entity {
     public burnedTotal?: bigint;
 
 
+    get _name(): string {
+        return 'Sum';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save Sum entity without an ID");
@@ -35,7 +39,7 @@ export class Sum implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Sum entity without an ID");
         const record = await store.get('Sum', id.toString());
         if (record){
-            return Sum.create(record as SumProps);
+            return this.create(record as SumProps);
         }else{
             return;
         }
@@ -45,7 +49,7 @@ export class Sum implements Entity {
 
     static create(record: SumProps): Sum {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Sum(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

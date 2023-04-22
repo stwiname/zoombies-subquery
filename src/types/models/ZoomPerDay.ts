@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type ZoomPerDayProps = Omit<ZoomPerDay, NonNullable<FunctionPropertyNames<ZoomPerDay>>>;
+export type ZoomPerDayProps = Omit<ZoomPerDay, NonNullable<FunctionPropertyNames<ZoomPerDay>>| '_name'>;
 
 export class ZoomPerDay implements Entity {
 
@@ -21,6 +21,10 @@ export class ZoomPerDay implements Entity {
     public burned?: bigint;
 
 
+    get _name(): string {
+        return 'ZoomPerDay';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save ZoomPerDay entity without an ID");
@@ -35,7 +39,7 @@ export class ZoomPerDay implements Entity {
         assert((id !== null && id !== undefined), "Cannot get ZoomPerDay entity without an ID");
         const record = await store.get('ZoomPerDay', id.toString());
         if (record){
-            return ZoomPerDay.create(record as ZoomPerDayProps);
+            return this.create(record as ZoomPerDayProps);
         }else{
             return;
         }
@@ -45,7 +49,7 @@ export class ZoomPerDay implements Entity {
 
     static create(record: ZoomPerDayProps): ZoomPerDay {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new ZoomPerDay(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

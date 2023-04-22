@@ -1,13 +1,13 @@
 {
   "name": "zoombies-subquery",
   "version": "1.0.0",
-  "description": "Zoom Token mint, burn and approvals on Moonriver",
+  "description": "Zoom Token mint, burn and approvals on Moonbeam",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
     "prepack": "rm -rf dist && npm build",
     "test": "jest",
-    "codegen": "./node_modules/.bin/subql codegen",
+    "codegen": "subql codegen",
     "start:docker": "docker-compose pull && docker-compose up --remove-orphans"
   },
   "homepage": "https://github.com/subquery/tutorials-frontier-evm-starter",
@@ -34,6 +34,6 @@
     "typescript": "^4.6.2"
   },
   "exports": {
-    "chaintypes": "src/chaintypes.ts"
+    "chaintypes": "./src/chaintypes.ts"
   }
 }

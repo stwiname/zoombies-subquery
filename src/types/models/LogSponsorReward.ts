@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type LogSponsorRewardProps = Omit<LogSponsorReward, NonNullable<FunctionPropertyNames<LogSponsorReward>>>;
+export type LogSponsorRewardProps = Omit<LogSponsorReward, NonNullable<FunctionPropertyNames<LogSponsorReward>>| '_name'>;
 
 export class LogSponsorReward implements Entity {
 
@@ -27,6 +27,10 @@ export class LogSponsorReward implements Entity {
     public zoomReward: bigint;
 
 
+    get _name(): string {
+        return 'LogSponsorReward';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save LogSponsorReward entity without an ID");
@@ -41,7 +45,7 @@ export class LogSponsorReward implements Entity {
         assert((id !== null && id !== undefined), "Cannot get LogSponsorReward entity without an ID");
         const record = await store.get('LogSponsorReward', id.toString());
         if (record){
-            return LogSponsorReward.create(record as LogSponsorRewardProps);
+            return this.create(record as LogSponsorRewardProps);
         }else{
             return;
         }
@@ -51,7 +55,7 @@ export class LogSponsorReward implements Entity {
 
     static create(record: LogSponsorRewardProps): LogSponsorReward {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new LogSponsorReward(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

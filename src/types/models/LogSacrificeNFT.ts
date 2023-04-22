@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type LogSacrificeNFTProps = Omit<LogSacrificeNFT, NonNullable<FunctionPropertyNames<LogSacrificeNFT>>>;
+export type LogSacrificeNFTProps = Omit<LogSacrificeNFT, NonNullable<FunctionPropertyNames<LogSacrificeNFT>>| '_name'>;
 
 export class LogSacrificeNFT implements Entity {
 
@@ -29,6 +29,10 @@ export class LogSacrificeNFT implements Entity {
     public zoomGained: bigint;
 
 
+    get _name(): string {
+        return 'LogSacrificeNFT';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save LogSacrificeNFT entity without an ID");
@@ -43,7 +47,7 @@ export class LogSacrificeNFT implements Entity {
         assert((id !== null && id !== undefined), "Cannot get LogSacrificeNFT entity without an ID");
         const record = await store.get('LogSacrificeNFT', id.toString());
         if (record){
-            return LogSacrificeNFT.create(record as LogSacrificeNFTProps);
+            return this.create(record as LogSacrificeNFTProps);
         }else{
             return;
         }
@@ -53,7 +57,7 @@ export class LogSacrificeNFT implements Entity {
 
     static create(record: LogSacrificeNFTProps): LogSacrificeNFT {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new LogSacrificeNFT(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type NFTHoldersProps = Omit<NFTHolders, NonNullable<FunctionPropertyNames<NFTHolders>>>;
+export type NFTHoldersProps = Omit<NFTHolders, NonNullable<FunctionPropertyNames<NFTHolders>>| '_name'>;
 
 export class NFTHolders implements Entity {
 
@@ -16,6 +16,10 @@ export class NFTHolders implements Entity {
 
     public id: string;
 
+
+    get _name(): string {
+        return 'NFTHolders';
+    }
 
     async save(): Promise<void>{
         let id = this.id;
@@ -31,7 +35,7 @@ export class NFTHolders implements Entity {
         assert((id !== null && id !== undefined), "Cannot get NFTHolders entity without an ID");
         const record = await store.get('NFTHolders', id.toString());
         if (record){
-            return NFTHolders.create(record as NFTHoldersProps);
+            return this.create(record as NFTHoldersProps);
         }else{
             return;
         }
@@ -41,7 +45,7 @@ export class NFTHolders implements Entity {
 
     static create(record: NFTHoldersProps): NFTHolders {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new NFTHolders(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

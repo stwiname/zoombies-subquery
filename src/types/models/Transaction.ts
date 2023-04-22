@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type TransactionProps = Omit<Transaction, NonNullable<FunctionPropertyNames<Transaction>>>;
+export type TransactionProps = Omit<Transaction, NonNullable<FunctionPropertyNames<Transaction>>| '_name'>;
 
 export class Transaction implements Entity {
 
@@ -29,6 +29,10 @@ export class Transaction implements Entity {
     public contractAddress: string;
 
 
+    get _name(): string {
+        return 'Transaction';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save Transaction entity without an ID");
@@ -43,7 +47,7 @@ export class Transaction implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Transaction entity without an ID");
         const record = await store.get('Transaction', id.toString());
         if (record){
-            return Transaction.create(record as TransactionProps);
+            return this.create(record as TransactionProps);
         }else{
             return;
         }
@@ -53,7 +57,7 @@ export class Transaction implements Entity {
 
     static create(record: TransactionProps): Transaction {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Transaction(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

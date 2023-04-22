@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type LogPackOpenedProps = Omit<LogPackOpened, NonNullable<FunctionPropertyNames<LogPackOpened>>>;
+export type LogPackOpenedProps = Omit<LogPackOpened, NonNullable<FunctionPropertyNames<LogPackOpened>>| '_name'>;
 
 export class LogPackOpened implements Entity {
 
@@ -25,6 +25,10 @@ export class LogPackOpened implements Entity {
     public rarity: number;
 
 
+    get _name(): string {
+        return 'LogPackOpened';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save LogPackOpened entity without an ID");
@@ -39,7 +43,7 @@ export class LogPackOpened implements Entity {
         assert((id !== null && id !== undefined), "Cannot get LogPackOpened entity without an ID");
         const record = await store.get('LogPackOpened', id.toString());
         if (record){
-            return LogPackOpened.create(record as LogPackOpenedProps);
+            return this.create(record as LogPackOpenedProps);
         }else{
             return;
         }
@@ -49,7 +53,7 @@ export class LogPackOpened implements Entity {
 
     static create(record: LogPackOpenedProps): LogPackOpened {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new LogPackOpened(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

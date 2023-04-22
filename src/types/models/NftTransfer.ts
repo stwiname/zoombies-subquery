@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type NftTransferProps = Omit<NftTransfer, NonNullable<FunctionPropertyNames<NftTransfer>>>;
+export type NftTransferProps = Omit<NftTransfer, NonNullable<FunctionPropertyNames<NftTransfer>>| '_name'>;
 
 export class NftTransfer implements Entity {
 
@@ -27,6 +27,10 @@ export class NftTransfer implements Entity {
     public tokenId: bigint;
 
 
+    get _name(): string {
+        return 'NftTransfer';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save NftTransfer entity without an ID");
@@ -41,7 +45,7 @@ export class NftTransfer implements Entity {
         assert((id !== null && id !== undefined), "Cannot get NftTransfer entity without an ID");
         const record = await store.get('NftTransfer', id.toString());
         if (record){
-            return NftTransfer.create(record as NftTransferProps);
+            return this.create(record as NftTransferProps);
         }else{
             return;
         }
@@ -51,7 +55,7 @@ export class NftTransfer implements Entity {
 
     static create(record: NftTransferProps): NftTransfer {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new NftTransfer(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

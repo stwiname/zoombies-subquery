@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type LogCardMintedProps = Omit<LogCardMinted, NonNullable<FunctionPropertyNames<LogCardMinted>>>;
+export type LogCardMintedProps = Omit<LogCardMinted, NonNullable<FunctionPropertyNames<LogCardMinted>>| '_name'>;
 
 export class LogCardMinted implements Entity {
 
@@ -29,6 +29,10 @@ export class LogCardMinted implements Entity {
     public editionNumber: bigint;
 
 
+    get _name(): string {
+        return 'LogCardMinted';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save LogCardMinted entity without an ID");
@@ -43,7 +47,7 @@ export class LogCardMinted implements Entity {
         assert((id !== null && id !== undefined), "Cannot get LogCardMinted entity without an ID");
         const record = await store.get('LogCardMinted', id.toString());
         if (record){
-            return LogCardMinted.create(record as LogCardMintedProps);
+            return this.create(record as LogCardMintedProps);
         }else{
             return;
         }
@@ -53,7 +57,7 @@ export class LogCardMinted implements Entity {
 
     static create(record: LogCardMintedProps): LogCardMinted {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new LogCardMinted(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

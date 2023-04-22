@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type NFTPerDayProps = Omit<NFTPerDay, NonNullable<FunctionPropertyNames<NFTPerDay>>>;
+export type NFTPerDayProps = Omit<NFTPerDay, NonNullable<FunctionPropertyNames<NFTPerDay>>| '_name'>;
 
 export class NFTPerDay implements Entity {
 
@@ -21,6 +21,10 @@ export class NFTPerDay implements Entity {
     public burned?: bigint;
 
 
+    get _name(): string {
+        return 'NFTPerDay';
+    }
+
     async save(): Promise<void>{
         let id = this.id;
         assert(id !== null, "Cannot save NFTPerDay entity without an ID");
@@ -35,7 +39,7 @@ export class NFTPerDay implements Entity {
         assert((id !== null && id !== undefined), "Cannot get NFTPerDay entity without an ID");
         const record = await store.get('NFTPerDay', id.toString());
         if (record){
-            return NFTPerDay.create(record as NFTPerDayProps);
+            return this.create(record as NFTPerDayProps);
         }else{
             return;
         }
@@ -45,7 +49,7 @@ export class NFTPerDay implements Entity {
 
     static create(record: NFTPerDayProps): NFTPerDay {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new NFTPerDay(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }
