@@ -26,11 +26,11 @@ type Sum @entity {
 
 }
 
-type NFTHolders @entity {
+# type NFTHolders @entity {
 
-  id: ID! # holder wallet address
+#   id: ID! # holder wallet address
 
-}
+# }
 
 type ZoomPerDay @entity {
 
@@ -42,135 +42,135 @@ type ZoomPerDay @entity {
 
 }
 
-type NFTPerDay @entity {
+# type NFTPerDay @entity {
 
-  id: ID! #timestamp
+#   id: ID! #timestamp
 
-  minted: BigInt
+#   minted: BigInt
 
-  burned: BigInt
+#   burned: BigInt
 
-}
+# }
 
-type RarityPerDay @entity {
+# type RarityPerDay @entity {
 
-  id: ID! #timestamp
+#   id: ID! #timestamp
 
-  diamond: BigInt
+#   diamond: BigInt
 
-  platinum: BigInt
+#   platinum: BigInt
 
-  epic: BigInt
+#   epic: BigInt
 
-  rare: BigInt
+#   rare: BigInt
 
-  uncommon: BigInt
+#   uncommon: BigInt
 
-  common: BigInt
+#   common: BigInt
 
-}
+# }
 
-type LogCardMinted @entity {
-	id: ID! # Transaction Hash
+# type LogCardMinted @entity {
+# 	id: ID! # Transaction Hash
 
-  blockNumber: Int
+#   blockNumber: Int
 
-  blockTimestamp: Date!
+#   blockTimestamp: Date!
 
-  buyer: String!
+#   buyer: String!
 
-  tokenId: BigInt!
+#   tokenId: BigInt!
 
-  cardTypeId: Int!
+#   cardTypeId: Int!
 
-  editionNumber: BigInt!
-}
+#   editionNumber: BigInt!
+# }
 
-type MintedType @entity {
-  id: ID!
+# type MintedType @entity {
+#   id: ID!
 
-  blockTimestamp: Date!
+#   blockTimestamp: Date!
 
-  cardTypeId: Int!
+#   cardTypeId: Int!
 
-}
+# }
 
-type LogPackOpened @entity {
- id: ID!
+# type LogPackOpened @entity {
+#  id: ID!
 
- blockNumber: Int
+#  blockNumber: Int
 
- blockTimestamp: Date!
+#  blockTimestamp: Date!
 
- buyer: String!
+#  buyer: String!
 
- rarity: Int!
-}
+#  rarity: Int!
+# }
 
-type LogSponsorReward @entity {
-  id:ID!
+# type LogSponsorReward @entity {
+#   id:ID!
 
-  blockNumber: Int
+#   blockNumber: Int
 
-  blockTimestamp: Date!
+#   blockTimestamp: Date!
 
-  sponsor: String!
+#   sponsor: String!
 
-  affiliate: String!
+#   affiliate: String!
 
-  zoomReward: BigInt!
-}
+#   zoomReward: BigInt!
+# }
 
-type LogDailyReward @entity {
-  id:ID!
+# type LogDailyReward @entity {
+#   id:ID!
 
-  blockNumber: Int
+#   blockNumber: Int
 
-  blockTimestamp: Date!
+#   blockTimestamp: Date!
 
-  player: String!
+#   player: String!
 
-  newBoosterBalance: BigInt!
-}
+#   newBoosterBalance: BigInt!
+# }
 
-type LogRewardBooster @entity {
-  id: ID!
+# type LogRewardBooster @entity {
+#   id: ID!
 
-  blockNumber: Int
+#   blockNumber: Int
 
-  blockTimestamp: Date!
+#   blockTimestamp: Date!
 
-  winner: String!
+#   winner: String!
 
-  boostersAwarded: BigInt!
-}
+#   boostersAwarded: BigInt!
+# }
 
-type LogSacrificeNFT @entity {
-  id:ID!
+# type LogSacrificeNFT @entity {
+#   id:ID!
 
-  blockNumber: Int
+#   blockNumber: Int
 
-  blockTimestamp: Date!
+#   blockTimestamp: Date!
 
-  owner: String!
+#   owner: String!
 
-  tokenId: BigInt!
+#   tokenId: BigInt!
 
-  cardTypeId: BigInt!
+#   cardTypeId: BigInt!
 
-  zoomGained: BigInt!
-}
+#   zoomGained: BigInt!
+# }
 
-type NftTransfer @entity {
- id:ID!
+# type NftTransfer @entity {
+#  id:ID!
 
- blockNumber: Int
+#  blockNumber: Int
 
- blockTimestamp: Date!
+#  blockTimestamp: Date!
 
- from: String!
+#  from: String!
 
- to: String!
+#  to: String!
 
- tokenId: BigInt!
-}
+#  tokenId: BigInt!
+# }
