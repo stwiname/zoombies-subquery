@@ -95,6 +95,20 @@ type MintedType @entity {
 
 }
 
+type LogCardTypeLoaded @entity {
+ id: ID!
+
+ blockNumber: Int
+
+ blockTimestamp: Date!
+
+ cardTypeId: Int!
+
+ cardTypeName: String
+
+ editionTotal: BigInt!
+}
+
 type LogPackOpened @entity {
  id: ID!
 

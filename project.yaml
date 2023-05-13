@@ -119,3 +119,9 @@ dataSources:
           filter:
             topics:
               - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+        # LogCardTypeLoaded(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal);
+        - handler: handleLogCardTypeLoadedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogCardTypeLoaded(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal)             

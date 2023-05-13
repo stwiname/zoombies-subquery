@@ -18,6 +18,8 @@ export {LogCardMinted} from "./LogCardMinted"
 
 export {MintedType} from "./MintedType"
 
+export {LogCardTypeLoaded} from "./LogCardTypeLoaded"
+
 export {LogPackOpened} from "./LogPackOpened"
 
 export {LogSponsorLinked} from "./LogSponsorLinked"

@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
+import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -8,6 +8,7 @@ import { BigNumber } from "ethers";
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
 type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
+type LogCardTypeLoadedEventArgs = [number, string, BigNumber] & {cardTypeId: number; cardTypeName: string; editionTotal:bigint; };
 type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; };
 type LogSponsorLinkedEventArgs = [string, string] & {sponsor:string, affiliate:string};
 type LogSponsorRewardEventArgs = [string, string, BigNumber] & {sponsor:string, affiliate:string, zoomReward:bigint};
@@ -95,6 +96,16 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
 
     await entity.save();
     await zpd.save();
+}
+
+export async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>): Promise<void> {
+  const card = new LogCardTypeLoaded(event.transactionHash);
+  card.blockNumber = event.blockNumber;
+  card.blockTimestamp = event.blockTimestamp;
+  card.cardTypeId = event.args.cardTypeId;
+  card.cardTypeName = event.args.cardTypeName;
+  card.editionTotal = event.args.editionTotal;
+  await card.save();
 }
 
 export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>): Promise<void> {
