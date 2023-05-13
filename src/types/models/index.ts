@@ -20,6 +20,8 @@ export {MintedType} from "./MintedType"
 
 export {LogPackOpened} from "./LogPackOpened"
 
+export {LogSponsorLinked} from "./LogSponsorLinked"
+
 export {LogSponsorReward} from "./LogSponsorReward"
 
 export {LogDailyReward} from "./LogDailyReward"

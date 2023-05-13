@@ -107,6 +107,18 @@ type LogPackOpened @entity {
  rarity: Int!
 }
 
+type LogSponsorLinked @entity {
+  id:ID!
+
+  blockNumber: Int
+
+  blockTimestamp: Date!
+
+  sponsor: String!
+
+  affiliate: String!
+}
+
 type LogSponsorReward @entity {
   id:ID!
 

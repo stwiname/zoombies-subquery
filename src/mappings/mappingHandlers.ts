@@ -1,5 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardMinted,MintedType,LogPackOpened,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
-//import {Transaction,Sum, ZoomPerDay} from "../types";
+import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -10,6 +9,7 @@ import { BigNumber } from "ethers";
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
 type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
 type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; };
+type LogSponsorLinkedEventArgs = [string, string] & {sponsor:string, affiliate:string};
 type LogSponsorRewardEventArgs = [string, string, BigNumber] & {sponsor:string, affiliate:string, zoomReward:bigint};
 type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterBalance:bigint; };
 type LogRewardBoostersEventArgs = [string, BigNumber] & {winner:string, boostersAwarded:bigint; };
@@ -167,6 +167,16 @@ export async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOp
   }
 
   await rpd.save();
+}
+
+export async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLinkedEventArgs>): Promise<void> {
+  const sponsor = new LogSponsorLinked(event.transactionHash);
+  sponsor.blockNumber = event.blockNumber;
+  sponsor.blockTimestamp = event.blockTimestamp;
+  sponsor.sponsor = event.args.sponsor;
+  sponsor.affiliate = event.args.affiliate;
+  
+  await sponsor.save();
 }
 
 export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>): Promise<void> {

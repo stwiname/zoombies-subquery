@@ -83,6 +83,12 @@ dataSources:
           filter:
             topics:
               - LogPackOpened(address indexed buyer, uint8 rarity)
+        # LogSponsorLinked(address sponsor, address affiliate)
+        - handler: handleLogSponsorLinkedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogSponsorLinked(address sponsor, address affiliate)
         # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
         - handler: handleLogSponsorRewardEvent
           kind: substrate/FrontierEvmEvent
