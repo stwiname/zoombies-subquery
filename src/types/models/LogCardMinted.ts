@@ -24,9 +24,13 @@ export class LogCardMinted implements Entity {
 
     public tokenId: bigint;
 
+    public rarity: number;
+
     public cardTypeId: number;
 
     public editionNumber: bigint;
+
+    public isFoil?: boolean;
 
 
     get _name(): string {

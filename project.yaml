@@ -30,7 +30,7 @@ dataSources:
         address: "0xc46c5cb32a72663c0db3205f6b444f9c34e216d1"
     assets:
       erc20:
-        file: "./erc20.abi.json"
+        file: "./ZoomToken.json"
     mapping:
       file: './dist/index.js'
       handlers:
@@ -57,6 +57,16 @@ dataSources:
               - null
               - null
               - null
+        - handler: handleZoomScoreUpdatedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+                - zoomScoreUpdated(address owner, uint256 newZoomScore, uint256 amount);
+        - handler: handleZoomBurnedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+                - zoomBurned(address owner, uint256 totalZoomBurned, uint256 amount);
   - kind: substrate/FrontierEvm
     startBlock: 3355969
     processor:
@@ -76,7 +86,7 @@ dataSources:
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
-              - LogCardMinted(address indexed buyer, uint tokenId, uint8 rarity,uint32 indexed cardTypeId, uint editionNumber, bool isFoil)
+              - LogCardMinted(address indexed buyer, uint tokenId, uint8 rarity, uint32 indexed cardTypeId, uint editionNumber, bool isFoil)
         # LogPackOpened(address indexed buyer, uint8 rarity)
         - handler: handleLogPackOpenedEvent
           kind: substrate/FrontierEvmEvent

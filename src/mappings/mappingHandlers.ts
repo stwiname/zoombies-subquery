@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
+import {Transaction,Sum,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -7,7 +7,9 @@ import { BigNumber } from "ethers";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
-type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; cardTypeId: number; editionNumber: bigint; };
+type ZoomScoreUpdatedEventArgs = [string, BigNumber, BigNumber] & {owner: string; newZoomScore: bigint; amount: bigint; };
+type ZoomBurnedEventArgs = [string, BigNumber] & {owner: string; totalZoomBurned: bigint; amount: bigint; };
+type CardMintedEventArgs = [string, BigNumber, number, BigNumber] & {buyer: string; tokenId: bigint; rarity: number ; cardTypeId: number; editionNumber: bigint; isFoil: boolean;};
 type LogCardTypeLoadedEventArgs = [number, string, BigNumber] & {cardTypeId: number; cardTypeName: string; editionTotal:bigint; };
 type LogPackOpenedEventArgs = [string, number] & {buyer: string; rarity:number; };
 type LogSponsorLinkedEventArgs = [string, string] & {sponsor:string, affiliate:string};
@@ -98,6 +100,28 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
     await zpd.save();
 }
 
+export async function handleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>): Promise<void> {
+  const zoom = new ZoomScoreUpdated(event.transactionHash);
+  zoom.blockNumber = event.blockNumber;
+  zoom.blockTimestamp = event.blockTimestamp;
+  zoom.owner = event.args.owner;
+  zoom.newZoomScore = event.args.newZoomScore;
+  zoom.zoomGained = event.args.amount;
+
+  await zoom.save();
+}
+
+export async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>): Promise<void> {
+  const zoom = new ZoomBurned(event.transactionHash);
+  zoom.blockNumber = event.blockNumber;
+  zoom.blockTimestamp = event.blockTimestamp;
+  zoom.owner = event.args.owner;
+  zoom.totalZoomBurned = event.args.totalZoomBurned;
+  zoom.zoomBurned = event.args.amount;
+
+  await zoom.save();
+}
+
 export async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>): Promise<void> {
   const card = new LogCardTypeLoaded(event.transactionHash);
   card.blockNumber = event.blockNumber;
@@ -114,8 +138,10 @@ export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMinte
   card.blockTimestamp = event.blockTimestamp;
   card.buyer = event.args.buyer;
   card.tokenId = event.args.tokenId;
+  card.rarity = event.args.rarity;
   card.cardTypeId = event.args.cardTypeId;
   card.editionNumber = event.args.editionNumber;
+  card.isFoil = event.args.isFoil;
   await card.save();
 
   let typeMinted = await MintedType.get((event.args.cardTypeId).toString());

@@ -10,6 +10,10 @@ export {NFTHolders} from "./NFTHolders"
 
 export {ZoomPerDay} from "./ZoomPerDay"
 
+export {ZoomScoreUpdated} from "./ZoomScoreUpdated"
+
+export {ZoomBurned} from "./ZoomBurned"
+
 export {NFTPerDay} from "./NFTPerDay"
 
 export {RarityPerDay} from "./RarityPerDay"
