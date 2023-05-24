@@ -4,10 +4,10 @@ version: 1.0.0
 runner:
   node:
     name: "@subql/node"
-    version: ">=0.35.0"
+    version: "*"
   query:
     name: "@subql/query"
-    version: ">=0.16.0"
+    version: "*"
 description: Moonbeam branch - Zoom Token mint, burn and approvals, Zoombies NFT events
 repository: https://github.com/Cardinal-Entertainment/zoombies-subquery
 schema:
