@@ -40,6 +40,14 @@ type SponsorAffiliateCount @entity{
   
 }
 
+type SponsorRewardTotal @entity{
+  
+    id: ID! # sponsor wallet address
+  
+    rewardTotal: BigInt
+  
+}
+
 type ZoomPerDay @entity {
 
   id: ID! #timestamp

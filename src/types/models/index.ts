@@ -10,6 +10,8 @@ export {NFTHolders} from "./NFTHolders"
 
 export {SponsorAffiliateCount} from "./SponsorAffiliateCount"
 
+export {SponsorRewardTotal} from "./SponsorRewardTotal"
+
 export {ZoomPerDay} from "./ZoomPerDay"
 
 export {ZoomScoreUpdated} from "./ZoomScoreUpdated"

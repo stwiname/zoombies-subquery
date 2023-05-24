@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount} from "../types";
+import {Transaction,Sum,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -65,6 +65,12 @@ function createNFTHolders(wallet: string): NFTHolders {
 function createSponsorAffiliate(wallet: string): SponsorAffiliateCount {
   const entity = new SponsorAffiliateCount(wallet);
   entity.affiliateCount = BigInt(0);
+  return entity;
+}
+
+function createSponsorReward(wallet: string): SponsorRewardTotal {
+  const entity = new SponsorRewardTotal(wallet);
+  entity.rewardTotal = BigInt(0);
   return entity;
 }
 
@@ -239,6 +245,14 @@ export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSpo
   reward.zoomReward = event.args.zoomReward;
 
   await reward.save();
+
+  let isSponsor = await SponsorRewardTotal.get(reward.sponsor);
+  if(isSponsor === undefined){
+    isSponsor = createSponsorReward(reward.sponsor);
+  }
+  
+  isSponsor.rewardTotal += BigInt(reward.zoomReward);
+  await isSponsor.save();
 }
 
 export async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>): Promise<void> {
