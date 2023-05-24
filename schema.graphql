@@ -32,6 +32,22 @@ type NFTHolders @entity {
 
 }
 
+type SponsorAffiliateCount @entity{
+  
+    id: ID! # sponsor wallet address
+  
+    affiliateCount: BigInt
+  
+}
+
+type SponsorRewardTotal @entity{
+  
+    id: ID! # sponsor wallet address
+  
+    rewardTotal: BigInt
+  
+}
+
 type ZoomPerDay @entity {
 
   id: ID! #timestamp
