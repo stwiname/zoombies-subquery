@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal} from "../types";
+import {Transaction,Sum,ZoomInflation,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -24,6 +24,12 @@ function createSum(id: string): Sum {
   const entity = new Sum(id);
   entity.mintedTotal = BigInt(0);
   entity.burnedTotal = BigInt(0);
+  return entity;
+}
+
+function createZoomInflation(timestamp: string): ZoomInflation {
+  const entity = new ZoomInflation(timestamp);
+  entity.total = BigInt(0);
   return entity;
 }
 
@@ -84,7 +90,7 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
     transaction.contractAddress = event.address;
     await transaction.save();
 
-    //Create entity to hold TOTAL minted/burned
+    //Create entity to hold TOTAL minted/burned per day
     let entity = await Sum.get("1");
     if(entity === undefined){
       entity = createSum("1");
@@ -92,11 +98,40 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
 
     //Create entity to hold Summary minted/burned Per Day
     const date = Date.parse(new Date(transaction.blockTimestamp).toISOString().split('T')[0]).toString();
-
+    // logger.info("MYYYYYYYYY DAAAAAATTTTTTEEEEEEE:");
+    // logger.info(date);
     let zpd = await ZoomPerDay.get(date);
     if(zpd === undefined){
       zpd = createTrackedPerDay(date);
     }
+
+    //Create entity to hold TOTAL Cumulative minted/burned
+    let inflation = await ZoomInflation.get(date);
+    if(inflation === undefined){ //then get yeserday's inflation value
+      inflation = createZoomInflation(date);
+      const prevDay = new Date();
+      prevDay.setTime(parseInt(date) - 86400000);
+      const yesterday_timestamp = Date.parse(new Date(prevDay.getTime()).toISOString().split('T')[0]).toString();
+      // logger.info("YESTERDAY!!!!!!!!:");
+      // logger.info(yesterday_timestamp);
+      let old_inflation = await ZoomInflation.get(yesterday_timestamp);
+      if(old_inflation !== undefined){
+        if(transaction.from == "0x0000000000000000000000000000000000000000") {
+          inflation.total = BigInt(old_inflation.total) + event.args.value.toBigInt();
+        }
+        if(transaction.to == "0x0000000000000000000000000000000000000000") {
+          inflation.total = BigInt(old_inflation.total) - event.args.value.toBigInt();
+        }
+      }
+    }else{
+      if(transaction.from == "0x0000000000000000000000000000000000000000") {
+        inflation.total = BigInt(inflation.total) + event.args.value.toBigInt();
+      }
+      if(transaction.to == "0x0000000000000000000000000000000000000000") {
+        inflation.total = BigInt(inflation.total) - event.args.value.toBigInt();
+      }
+    }
+    await inflation.save();
 
     //Track our totals
     if(transaction.from == "0x0000000000000000000000000000000000000000") {
@@ -110,6 +145,8 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
 
     await entity.save();
     await zpd.save();
+
+
 }
 
 export async function handleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>): Promise<void> {

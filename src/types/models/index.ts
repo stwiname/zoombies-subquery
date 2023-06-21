@@ -6,6 +6,8 @@ export {Transaction} from "./Transaction"
 
 export {Sum} from "./Sum"
 
+export {ZoomInflation} from "./ZoomInflation"
+
 export {NFTHolders} from "./NFTHolders"
 
 export {SponsorAffiliateCount} from "./SponsorAffiliateCount"

@@ -4,7 +4,7 @@
   "description": "Zoom Token mint, burn and approvals on Moonbeam",
   "main": "dist/index.js",
   "scripts": {
-    "build": "subql build",
+    "build": "subql codegen && subql build",
     "prepack": "rm -rf dist && npm build",
     "test": "jest",
     "codegen": "subql codegen",

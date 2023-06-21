@@ -26,6 +26,14 @@ type Sum @entity {
 
 }
 
+type ZoomInflation @entity {
+
+  id: ID! # only "1" ring to hold them all
+
+  total: BigInt
+
+}
+
 type NFTHolders @entity {
 
   id: ID! # holder wallet address
