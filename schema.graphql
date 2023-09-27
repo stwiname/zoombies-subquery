@@ -260,3 +260,15 @@ type NftTransfer @entity {
 
  tokenId: BigInt!
 }
+
+type BridgedZoom @entity {
+ id:ID!
+
+ blockNumber: Int
+
+ blockTimestamp: Date!
+
+ tx: String!
+
+ nakamaUserId: String!
+}
