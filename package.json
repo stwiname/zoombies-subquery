@@ -1,7 +1,7 @@
 {
   "name": "zoombies-subquery",
   "version": "1.0.0",
-  "description": "Zoom Token mint, burn and approvals on Moonbeam",
+  "description": "Zoom Token mint, burn and approvals on Moonbase and Moonbeam",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql codegen && subql build",
@@ -10,31 +10,24 @@
     "codegen": "subql codegen",
     "start:docker": "docker-compose pull && docker-compose up --remove-orphans"
   },
-  "homepage": "https://github.com/subquery/tutorials-frontier-evm-starter",
-  "repository": "github:subquery/tutorials-frontier-evm-starter",
+  "homepage": "https://github.com/Cardinal-Entertainment/zoombies-subquery",
+  "repository": "github:Cardinal-Entertainment/zoombies-subquery",
   "files": [
     "dist",
     "schema.graphql",
     "project.yaml"
   ],
-  "author": "SubQuery Team",
+  "author": "Cardinal Entertainment",
   "license": "Apache-2.0",
   "resolutions": {
     "ipfs-unixfs": "6.0.6"
   },
-  "dependencies": {
-    "ethers": "^5.7.1",
-    "moonbeam-types-bundle": "^2.0.7"
-  },
   "devDependencies": {
-    "@polkadot/api": "^9",
+    "@subql/types": "latest",
+    "@subql/testing": "latest",
+    "@subql/node": "latest",
     "@subql/cli": "latest",
-    "@subql/frontier-evm-processor": "0.1.2",
-    "@subql/types": "^1.1.0",
-    "typescript": "^4.6.2"
-  },
-  "exports": {
-    "frontierEvm": "./node_modules/@subql/frontier-evm-processor/dist/index.js",
-    "chaintypes": "./src/chaintypes.ts"
+    "@polkadot/api": "^10",
+    "typescript": "^4.1.3"
   }
 }

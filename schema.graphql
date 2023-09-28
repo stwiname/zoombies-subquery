@@ -264,6 +264,8 @@ type NftTransfer @entity {
 type BridgedZoom @entity {
  id:ID!
 
+ network: Int
+ 
  blockNumber: Int
 
  blockTimestamp: Date!
@@ -271,4 +273,6 @@ type BridgedZoom @entity {
  tx: String!
 
  nakamaUserId: String!
+
+ amount: BigInt!
 }

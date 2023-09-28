@@ -1,0 +1,137 @@
+specVersion: 1.0.0
+name: zoombies-subquery
+version: 1.0.0
+runner:
+  node:
+    name: "@subql/node"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: Moonbase - Zoom Token mint, burn and approvals, Zoombies NFT events and ZoomBridge
+repository: https://github.com/Cardinal-Entertainment/zoombies-subquery
+schema:
+  file: ./schema.graphql
+network:
+  chainId: '0x91bc6e169807aaa54802737e1c504b2577d4fafedd5a02c10293b1cd60e39527' # Genesis hash of Moonbeam
+  endpoint: "wss://moonbeam-alpha.api.onfinality.io/ws?apikey=2c862d3c-611b-42fb-be0c-638f60da7993"
+  dictionary: "https://api.subquery.network/sq/subquery/moonbase-alpha-dictionary"
+  chaintypes:
+    file: ./dist/chaintypes.js
+
+dataSources:
+  - kind: substrate/FrontierEvm
+    startBlock: 4147225
+    processor:
+      file: ./node_modules/@subql/frontier-evm-processor/dist/bundle.js
+      options:
+        # Must be a key of assets
+        abi: "erc20"
+        address: "0xE4b80b7D039806efEAc8a6580fbcf2808CaAf9eC"
+    assets:
+      erc20:
+        file: "./ZoomToken.json"
+    mapping:
+      file: './dist/index.js'
+      handlers:
+        - handler: handleMoonbeamEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            ## Topics that follow Ethereum JSON-RPC log filters
+            ## https://docs.ethers.io/v5/concepts/events/
+            ## With a couple of added benefits:
+            ##  - Values don't need to be 0 padded
+            ##  - Event fragments can be provided and automatically converted to their id
+            topics:
+              ## Example valid values:
+              # - '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+              # - Transfer(address,address,u256)
+              # - Transfer(address from,address to,uint256 value)
+
+              ## Example of OR filter, will capture Transfer or Approval events
+              # - - 'Transfer(address indexed from,address indexed to,uint256 value)'
+              #   - 'Approval(address indexed owner, address indexed spender, uint256 value)'
+
+              - Transfer(address indexed from,address indexed to,uint256 value)
+              ## topics[1] to topics[3] are the indexed values
+              - null
+              - null
+              - null
+        - handler: handleZoomScoreUpdatedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+                - zoomScoreUpdated(address owner, uint256 newZoomScore, uint256 amount);
+        - handler: handleZoomBurnedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+                - zoomBurned(address owner, uint256 totalZoomBurned, uint256 amount);
+  - kind: substrate/FrontierEvm
+    startBlock: 4147225
+    processor:
+      file: './node_modules/@subql/frontier-evm-processor/dist/bundle.js'
+      options:
+        # Must be a key of assets
+        abi: erc721
+        address: "0xB595E4a28540318a802b7847455278C502F30861"
+    assets:
+      erc721:
+        file: './Zoombies.json'
+    mapping:
+      file: './dist/index.js'
+      handlers:
+        # LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
+        - handler: handleLogCardMintedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogCardMinted(address indexed buyer, uint tokenId, uint8 rarity, uint32 indexed cardTypeId, uint editionNumber, bool isFoil)
+        # LogPackOpened(address indexed buyer, uint8 rarity)
+        - handler: handleLogPackOpenedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogPackOpened(address indexed buyer, uint8 rarity)
+        # LogSponsorLinked(address sponsor, address affiliate)
+        - handler: handleLogSponsorLinkedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogSponsorLinked(address sponsor, address affiliate)
+        # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
+        - handler: handleLogSponsorRewardEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
+        # LogDailyReward(address player, uint newBoosterBalance)
+        - handler: handleLogDailyRewardEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogDailyReward(address player, uint newBoosterBalance)
+        # LogRewardBoosters(address winner, uint boostersAwarded)
+        - handler: handleLogRewardBoostersEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogRewardBoosters(address winner, uint boostersAwarded)
+        # LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
+        - handler: handleLogSacrificeNFTEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
+        # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+        - handler: handleNFTTransferEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+        # LogCardTypeLoaded(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal);
+        - handler: handleLogCardTypeLoadedEvent
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+              - LogCardTypeLoaded(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal)             
