@@ -16,6 +16,8 @@ export class RarityPerDay implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public diamond?: bigint;
 
     public platinum?: bigint;

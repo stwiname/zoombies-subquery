@@ -16,7 +16,7 @@ export class LogSacrificeNFT implements Entity {
 
     public id: string;
 
-    public blockNumber?: number;
+    public network?: number;
 
     public blockTimestamp: Date;
 

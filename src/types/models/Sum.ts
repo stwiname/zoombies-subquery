@@ -16,6 +16,8 @@ export class Sum implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public mintedTotal?: bigint;
 
     public burnedTotal?: bigint;

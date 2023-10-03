@@ -16,6 +16,8 @@ export class ZoomPerDay implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public minted?: bigint;
 
     public burned?: bigint;

@@ -16,6 +16,8 @@ export class ZoomInflation implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public total?: bigint;
 
 

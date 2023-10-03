@@ -16,6 +16,8 @@ export class SponsorAffiliateCount implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public affiliateCount?: bigint;
 
 

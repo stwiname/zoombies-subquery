@@ -2,7 +2,7 @@ type Transaction @entity {
 
   id: ID! # Transaction hash
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -20,6 +20,8 @@ type Sum @entity {
 
   id: ID! # only "1" ring to hold them all
 
+  network: Int
+
   mintedTotal: BigInt
 
   burnedTotal: BigInt
@@ -29,6 +31,8 @@ type Sum @entity {
 type ZoomInflation @entity {
 
   id: ID! # only "1" ring to hold them all
+
+  network: Int
 
   total: BigInt
 
@@ -43,6 +47,8 @@ type NFTHolders @entity {
 type SponsorAffiliateCount @entity{
   
     id: ID! # sponsor wallet address
+
+    network: Int
   
     affiliateCount: BigInt
   
@@ -51,6 +57,8 @@ type SponsorAffiliateCount @entity{
 type SponsorRewardTotal @entity{
   
     id: ID! # sponsor wallet address
+
+    network: Int
   
     rewardTotal: BigInt
   
@@ -59,6 +67,8 @@ type SponsorRewardTotal @entity{
 type ZoomPerDay @entity {
 
   id: ID! #timestamp
+
+  network: Int
 
   minted: BigInt
 
@@ -70,7 +80,7 @@ type ZoomScoreUpdated @entity {
 
   id: ID! #timestamp
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -86,7 +96,7 @@ type ZoomBurned @entity {
 
   id: ID! #timestamp
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -102,6 +112,8 @@ type NFTPerDay @entity {
 
   id: ID! #timestamp
 
+  network: Int
+
   minted: BigInt
 
   burned: BigInt
@@ -111,6 +123,8 @@ type NFTPerDay @entity {
 type RarityPerDay @entity {
 
   id: ID! #timestamp
+
+  network: Int
 
   diamond: BigInt
 
@@ -129,7 +143,7 @@ type RarityPerDay @entity {
 type LogCardMinted @entity {
 	id: ID! # Transaction Hash
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -149,6 +163,8 @@ type LogCardMinted @entity {
 type MintedType @entity {
   id: ID!
 
+  network: Int
+
   blockTimestamp: Date!
 
   cardTypeId: Int!
@@ -158,7 +174,7 @@ type MintedType @entity {
 type LogCardTypeLoaded @entity {
  id: ID!
 
- blockNumber: Int
+ network: Int
 
  blockTimestamp: Date!
 
@@ -172,7 +188,7 @@ type LogCardTypeLoaded @entity {
 type LogPackOpened @entity {
  id: ID!
 
- blockNumber: Int
+ network: Int
 
  blockTimestamp: Date!
 
@@ -184,7 +200,7 @@ type LogPackOpened @entity {
 type LogSponsorLinked @entity {
   id:ID!
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -196,7 +212,7 @@ type LogSponsorLinked @entity {
 type LogSponsorReward @entity {
   id:ID!
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -210,7 +226,7 @@ type LogSponsorReward @entity {
 type LogDailyReward @entity {
   id:ID!
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -222,7 +238,7 @@ type LogDailyReward @entity {
 type LogRewardBooster @entity {
   id: ID!
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -234,7 +250,7 @@ type LogRewardBooster @entity {
 type LogSacrificeNFT @entity {
   id:ID!
 
-  blockNumber: Int
+  network: Int
 
   blockTimestamp: Date!
 
@@ -250,7 +266,7 @@ type LogSacrificeNFT @entity {
 type NftTransfer @entity {
  id:ID!
 
- blockNumber: Int
+ network: Int
 
  blockTimestamp: Date!
 

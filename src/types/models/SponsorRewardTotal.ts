@@ -16,6 +16,8 @@ export class SponsorRewardTotal implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public rewardTotal?: bigint;
 
 

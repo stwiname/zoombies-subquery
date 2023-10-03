@@ -82,7 +82,6 @@ function createSponsorReward(wallet: string): SponsorRewardTotal {
 
 export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventArgs>): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
-    transaction.blockNumber = Math.trunc(event.blockNumber);
     transaction.blockTimestamp = event.blockTimestamp;
     transaction.value = event.args.value.toBigInt();
     transaction.from = event.args.from;
@@ -151,7 +150,6 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
 
 export async function handleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>): Promise<void> {
   const zoom = new ZoomScoreUpdated(event.transactionHash);
-  zoom.blockNumber = event.blockNumber;
   zoom.blockTimestamp = event.blockTimestamp;
   zoom.owner = event.args.owner;
   zoom.newZoomScore = event.args.newZoomScore;
@@ -162,7 +160,6 @@ export async function handleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomSc
 
 export async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>): Promise<void> {
   const zoom = new ZoomBurned(event.transactionHash);
-  zoom.blockNumber = event.blockNumber;
   zoom.blockTimestamp = event.blockTimestamp;
   zoom.owner = event.args.owner;
   zoom.totalZoomBurned = event.args.totalZoomBurned;
@@ -173,7 +170,6 @@ export async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEv
 
 export async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>): Promise<void> {
   const card = new LogCardTypeLoaded(event.transactionHash);
-  card.blockNumber = event.blockNumber;
   card.blockTimestamp = event.blockTimestamp;
   card.cardTypeId = event.args.cardTypeId;
   card.cardTypeName = event.args.cardTypeName;
@@ -183,7 +179,6 @@ export async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCa
 
 export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>): Promise<void> {
   const card = new LogCardMinted(event.transactionHash);
-  card.blockNumber = event.blockNumber;
   card.blockTimestamp = event.blockTimestamp;
   card.buyer = event.args.buyer;
   card.tokenId = event.args.tokenId;
@@ -214,7 +209,6 @@ export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMinte
 
 export async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEventArgs>): Promise<void> {
   const pack = new LogPackOpened(event.transactionHash);
-  pack.blockNumber = event.blockNumber;
   pack.blockTimestamp = event.blockTimestamp;
   pack.buyer = event.args.buyer;
   pack.rarity = event.args.rarity;
@@ -257,7 +251,6 @@ export async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOp
 
 export async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLinkedEventArgs>): Promise<void> {
   const sponsor = new LogSponsorLinked(event.transactionHash);
-  sponsor.blockNumber = event.blockNumber;
   sponsor.blockTimestamp = event.blockTimestamp;
   sponsor.sponsor = event.args.sponsor;
   sponsor.affiliate = event.args.affiliate;
@@ -275,7 +268,6 @@ export async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSpo
 
 export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>): Promise<void> {
   const reward = new LogSponsorReward(event.transactionHash);
-  reward.blockNumber = event.blockNumber;
   reward.blockTimestamp = event.blockTimestamp;
   reward.sponsor = event.args.sponsor;
   reward.affiliate = event.args.affiliate;
@@ -294,7 +286,6 @@ export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSpo
 
 export async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>): Promise<void> {
   const reward = new LogDailyReward(event.transactionHash);
-  reward.blockNumber = event.blockNumber;
   reward.blockTimestamp = event.blockTimestamp;
   reward.player = event.args.player;
   reward.newBoosterBalance = event.args.newBoosterBalance;
@@ -304,7 +295,6 @@ export async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDaily
 
 export async function handleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoostersEventArgs>): Promise<void> {
   const reward = new LogRewardBooster(event.transactionHash);
-  reward.blockNumber = event.blockNumber;
   reward.blockTimestamp = event.blockTimestamp;
   reward.winner = event.args.winner;
   reward.boostersAwarded = event.args.boostersAwarded;
@@ -314,7 +304,6 @@ export async function handleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRe
 
 export async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNFTEventArgs>): Promise<void> {
   const sac = new LogSacrificeNFT(event.transactionHash);
-  sac.blockNumber = event.blockNumber;
   sac.blockTimestamp = event.blockTimestamp;
   sac.owner = event.args.owner;
   sac.tokenId = event.args.tokenId;
@@ -326,7 +315,6 @@ export async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacr
 
 export async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventArgs>): Promise<void> {
   const nftTransfer = new NftTransfer(event.transactionHash);
-  nftTransfer.blockNumber = event.blockNumber;
   nftTransfer.blockTimestamp = event.blockTimestamp;
   nftTransfer.from = event.args.from;
   nftTransfer.to = event.args.to;

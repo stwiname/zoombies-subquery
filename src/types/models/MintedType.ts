@@ -16,6 +16,8 @@ export class MintedType implements Entity {
 
     public id: string;
 
+    public network?: number;
+
     public blockTimestamp: Date;
 
     public cardTypeId: number;
