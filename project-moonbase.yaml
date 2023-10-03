@@ -34,7 +34,7 @@ dataSources:
     mapping:
       file: './dist/index.js'
       handlers:
-        - handler: handleMoonbeamEvent
+        - handler: handleMoonbaseEvent
           kind: substrate/FrontierEvmEvent
           filter:
             ## Topics that follow Ethereum JSON-RPC log filters

@@ -81,8 +81,15 @@ function createSponsorReward(wallet: string): SponsorRewardTotal {
 }
 
 export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventArgs>): Promise<void> {
+  handleTransfer(event, 1284);
+}
+export async function handleMoonbaseEvent(event: FrontierEvmEvent<TransferEventArgs>): Promise<void> {
+  handleTransfer(event, 1287);
+}
+async function handleTransfer(event: FrontierEvmEvent<TransferEventArgs>, network: number): Promise<void> {
     const transaction = new Transaction(event.transactionHash);
     transaction.blockTimestamp = event.blockTimestamp;
+    transaction.network = network;
     transaction.value = event.args.value.toBigInt();
     transaction.from = event.args.from;
     transaction.to = event.args.to;
@@ -148,7 +155,13 @@ export async function handleMoonbeamEvent(event: FrontierEvmEvent<TransferEventA
 
 }
 
-export async function handleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>): Promise<void> {
+export async function moonbeamHandleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>): Promise<void> {
+  zoomScoreUpdatedEvent(event, 1284);
+}
+export async function moonbaseHandleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>): Promise<void> {
+  zoomScoreUpdatedEvent(event, 1284);
+}
+async function zoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>, network: number): Promise<void> {
   const zoom = new ZoomScoreUpdated(event.transactionHash);
   zoom.blockTimestamp = event.blockTimestamp;
   zoom.owner = event.args.owner;
@@ -158,7 +171,13 @@ export async function handleZoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomSc
   await zoom.save();
 }
 
-export async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>): Promise<void> {
+export async function moonbeamHandleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>): Promise<void> {
+  handleZoomBurnedEvent(event, 1284);
+}
+export async function moonbaseHandleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>): Promise<void> {
+  handleZoomBurnedEvent(event, 1287);
+}
+async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>, network: number): Promise<void> {
   const zoom = new ZoomBurned(event.transactionHash);
   zoom.blockTimestamp = event.blockTimestamp;
   zoom.owner = event.args.owner;
