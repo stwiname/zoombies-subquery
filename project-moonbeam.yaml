@@ -62,7 +62,7 @@ dataSources:
           filter:
             topics:
                 - zoomScoreUpdated(address owner, uint256 newZoomScore, uint256 amount);
-        - handler: handleZoomBurnedEvent
+        - handler: moonbeamHandleZoomBurnedEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
@@ -82,55 +82,55 @@ dataSources:
       file: './dist/index.js'
       handlers:
         # LogCardMinted(address indexed buyer, uint tokenId, uint32 indexed cardTypeId, uint editionNumber)
-        - handler: handleLogCardMintedEvent
+        - handler: moonbeamHandleLogCardMintedEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogCardMinted(address indexed buyer, uint tokenId, uint8 rarity, uint32 indexed cardTypeId, uint editionNumber, bool isFoil)
         # LogPackOpened(address indexed buyer, uint8 rarity)
-        - handler: handleLogPackOpenedEvent
+        - handler: moonbeamHandleLogPackOpenedEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogPackOpened(address indexed buyer, uint8 rarity)
         # LogSponsorLinked(address sponsor, address affiliate)
-        - handler: handleLogSponsorLinkedEvent
+        - handler: moonbeamHandleLogSponsorLinkedEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogSponsorLinked(address sponsor, address affiliate)
         # LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
-        - handler: handleLogSponsorRewardEvent
+        - handler: moonbeamHandleLogSponsorRewardEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogSponsorReward(address sponsor, address affiliate, uint zoomReward)
         # LogDailyReward(address player, uint newBoosterBalance)
-        - handler: handleLogDailyRewardEvent
+        - handler: moonbeamHandleLogDailyRewardEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogDailyReward(address player, uint newBoosterBalance)
         # LogRewardBoosters(address winner, uint boostersAwarded)
-        - handler: handleLogRewardBoostersEvent
+        - handler: moonbeamHandleLogRewardBoostersEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogRewardBoosters(address winner, uint boostersAwarded)
         # LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
-        - handler: handleLogSacrificeNFTEvent
+        - handler: moonbeamHandleLogSacrificeNFTEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - LogSacrificeNFT(address owner, uint256 tokenId, uint16 cardTypeId, uint256 zoomGained)
         # Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
-        - handler: handleNFTTransferEvent
+        - handler: moonbeamHandleNFTTransferEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
               - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
         # LogCardTypeLoaded(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal);
-        - handler: handleLogCardTypeLoadedEvent
+        - handler: moonbeamHandleLogCardTypeLoadedEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:

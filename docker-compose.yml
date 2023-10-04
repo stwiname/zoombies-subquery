@@ -38,10 +38,10 @@ services:
       - --db-schema=app
       - --disable-historical=true
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
-      interval: 3s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 5
 
   subquery-node-moonbeam:
     image: onfinality/subql-node:latest
@@ -63,10 +63,10 @@ services:
       - --db-schema=app
       - --disable-historical=true
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
-      interval: 3s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 5
 
   graphql-engine:
     image: onfinality/subql-query:latest
@@ -85,4 +85,3 @@ services:
     command:
       - --name=app
       - --playground
-      - --indexer=http://subquery-node:3000

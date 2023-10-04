@@ -164,6 +164,7 @@ export async function moonbaseHandleZoomScoreUpdatedEvent(event: FrontierEvmEven
 async function zoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEventArgs>, network: number): Promise<void> {
   const zoom = new ZoomScoreUpdated(event.transactionHash);
   zoom.blockTimestamp = event.blockTimestamp;
+  zoom.network = network;
   zoom.owner = event.args.owner;
   zoom.newZoomScore = event.args.newZoomScore;
   zoom.zoomGained = event.args.amount;
@@ -180,6 +181,7 @@ export async function moonbaseHandleZoomBurnedEvent(event: FrontierEvmEvent<Zoom
 async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs>, network: number): Promise<void> {
   const zoom = new ZoomBurned(event.transactionHash);
   zoom.blockTimestamp = event.blockTimestamp;
+  zoom.network = network;
   zoom.owner = event.args.owner;
   zoom.totalZoomBurned = event.args.totalZoomBurned;
   zoom.zoomBurned = event.args.amount;
@@ -187,18 +189,32 @@ async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs
   await zoom.save();
 }
 
-export async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>): Promise<void> {
+export async function moonbeamHandleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>): Promise<void> {
+  handleLogCardTypeLoadedEvent(event, 1284);
+}
+export async function moonbaseHandleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>): Promise<void> {
+  handleLogCardTypeLoadedEvent(event, 1287);
+}
+async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeLoadedEventArgs>, network: number): Promise<void> {
   const card = new LogCardTypeLoaded(event.transactionHash);
   card.blockTimestamp = event.blockTimestamp;
+  card.network = network;
   card.cardTypeId = event.args.cardTypeId;
   card.cardTypeName = event.args.cardTypeName;
   card.editionTotal = event.args.editionTotal;
   await card.save();
 }
 
-export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>): Promise<void> {
+export async function moonbeamHandleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>): Promise<void> {
+  handleLogCardMintedEvent(event, 1284);
+}
+export async function moonbaseHandleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>): Promise<void> {
+  handleLogCardMintedEvent(event, 1287);
+}
+async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventArgs>, network:number): Promise<void> {
   const card = new LogCardMinted(event.transactionHash);
   card.blockTimestamp = event.blockTimestamp;
+  card.network = network;
   card.buyer = event.args.buyer;
   card.tokenId = event.args.tokenId;
   card.rarity = event.args.rarity;
@@ -226,9 +242,16 @@ export async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMinte
   await npd.save();
 }
 
-export async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEventArgs>): Promise<void> {
+export async function moonbeamHandleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEventArgs>): Promise<void> {
+  handleLogPackOpenedEvent(event, 1284);
+}
+export async function moonbaseHandleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEventArgs>): Promise<void> {
+  handleLogPackOpenedEvent(event, 1287);
+}
+async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEventArgs>, network:number): Promise<void> {
   const pack = new LogPackOpened(event.transactionHash);
   pack.blockTimestamp = event.blockTimestamp;
+  pack.network = network;
   pack.buyer = event.args.buyer;
   pack.rarity = event.args.rarity;
   await pack.save();
@@ -268,9 +291,16 @@ export async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOp
   await rpd.save();
 }
 
-export async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLinkedEventArgs>): Promise<void> {
+export async function moonbeamHandleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLinkedEventArgs>): Promise<void> {
+  handleLogSponsorLinkedEvent(event, 1284);
+}
+export async function moonbaseHandleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLinkedEventArgs>): Promise<void> {
+  handleLogSponsorLinkedEvent(event, 1287);
+}
+async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLinkedEventArgs>, network:number): Promise<void> {
   const sponsor = new LogSponsorLinked(event.transactionHash);
   sponsor.blockTimestamp = event.blockTimestamp;
+  sponsor.network = network;
   sponsor.sponsor = event.args.sponsor;
   sponsor.affiliate = event.args.affiliate;
   
@@ -285,9 +315,16 @@ export async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSpo
   await isSponsor.save();
 }
 
-export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>): Promise<void> {
+export async function moonbeamHandleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>): Promise<void> {
+  handleLogSponsorRewardEvent(event, 1284);
+}
+export async function moonbaseHandleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>): Promise<void> {
+  handleLogSponsorRewardEvent(event, 1287);
+}
+async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRewardEventArgs>, network:number): Promise<void> {
   const reward = new LogSponsorReward(event.transactionHash);
   reward.blockTimestamp = event.blockTimestamp;
+  reward.network = network;
   reward.sponsor = event.args.sponsor;
   reward.affiliate = event.args.affiliate;
   reward.zoomReward = event.args.zoomReward;
@@ -303,8 +340,15 @@ export async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSpo
   await isSponsor.save();
 }
 
-export async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>): Promise<void> {
+export async function moonbeamHandleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>): Promise<void> {
+  handleLogDailyRewardEvent(event, 1284);
+}
+export async function moonbaseHandleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>): Promise<void> {
+  handleLogDailyRewardEvent(event, 1287);
+}
+async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardEventArgs>, network:number): Promise<void> {
   const reward = new LogDailyReward(event.transactionHash);
+  reward.network = network;
   reward.blockTimestamp = event.blockTimestamp;
   reward.player = event.args.player;
   reward.newBoosterBalance = event.args.newBoosterBalance;
@@ -312,18 +356,32 @@ export async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDaily
   await reward.save();
 }
 
-export async function handleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoostersEventArgs>): Promise<void> {
+export async function moonbeamHandleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoostersEventArgs>): Promise<void> {
+  handleLogRewardBoostersEvent(event, 1284);
+}
+export async function moonbaseHandleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoostersEventArgs>): Promise<void> {
+  handleLogRewardBoostersEvent(event, 1287);
+}
+async function handleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoostersEventArgs>, network:number): Promise<void> {
   const reward = new LogRewardBooster(event.transactionHash);
   reward.blockTimestamp = event.blockTimestamp;
+  reward.network = network;
   reward.winner = event.args.winner;
   reward.boostersAwarded = event.args.boostersAwarded;
 
   await reward.save();
 }
 
-export async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNFTEventArgs>): Promise<void> {
+export async function moonbeamHandleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNFTEventArgs>): Promise<void> {
+  handleLogSacrificeNFTEvent(event, 1284);
+}
+export async function moonbaseHandleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNFTEventArgs>): Promise<void> {
+  handleLogSacrificeNFTEvent(event, 1287);
+}
+async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNFTEventArgs>, network:number): Promise<void> {
   const sac = new LogSacrificeNFT(event.transactionHash);
   sac.blockTimestamp = event.blockTimestamp;
+  sac.network = network;
   sac.owner = event.args.owner;
   sac.tokenId = event.args.tokenId;
   sac.cardTypeId = event.args.cardTypeId;
@@ -332,9 +390,17 @@ export async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacr
   await sac.save();
 }
 
-export async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventArgs>): Promise<void> {
+export async function moonbeamHandleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventArgs>): Promise<void> {
+  handleNFTTransferEvent(event, 1284);
+}
+export async function moonbaseHandleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventArgs>): Promise<void> {
+  handleNFTTransferEvent(event, 1287);
+}
+
+async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventArgs>, network:number): Promise<void> {
   const nftTransfer = new NftTransfer(event.transactionHash);
   nftTransfer.blockTimestamp = event.blockTimestamp;
+  nftTransfer.network = network;
   nftTransfer.from = event.args.from;
   nftTransfer.to = event.args.to;
   nftTransfer.tokenId = event.args.tokenId;
