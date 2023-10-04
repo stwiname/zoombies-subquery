@@ -18,13 +18,13 @@ export class NftTransfer implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public from: string;
+    public from?: string;
 
     public to: string;
 
-    public tokenId: bigint;
+    public tokenId?: bigint;
 
 
     get _name(): string {

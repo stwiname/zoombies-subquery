@@ -18,11 +18,11 @@ export class LogPackOpened implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public buyer: string;
+    public buyer?: string;
 
-    public rarity: number;
+    public rarity?: number;
 
 
     get _name(): string {

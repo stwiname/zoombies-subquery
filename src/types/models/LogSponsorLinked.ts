@@ -18,11 +18,11 @@ export class LogSponsorLinked implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public sponsor: string;
+    public sponsor?: string;
 
-    public affiliate: string;
+    public affiliate?: string;
 
 
     get _name(): string {

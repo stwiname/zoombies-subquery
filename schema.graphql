@@ -4,15 +4,15 @@ type Transaction @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  value: BigInt!
+  value: BigInt
 
-  to: String!
+  to: String
 
-  from: String!
+  from: String
 
-  contractAddress: String!
+  contractAddress: String
 
 }
 
@@ -82,9 +82,9 @@ type ZoomScoreUpdated @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  owner: String!
+  owner: String
 
   newZoomScore: BigInt
 
@@ -98,9 +98,9 @@ type ZoomBurned @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  owner: String!
+  owner: String
 
   totalZoomBurned: BigInt
 
@@ -145,17 +145,17 @@ type LogCardMinted @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  buyer: String!
+  buyer: String
 
-  tokenId: BigInt!
+  tokenId: BigInt
 
-  rarity: Int!
+  rarity: Int
 
-  cardTypeId: Int!
+  cardTypeId: Int
 
-  editionNumber: BigInt!
+  editionNumber: BigInt
 
   isFoil: Boolean
 }
@@ -165,9 +165,9 @@ type MintedType @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  cardTypeId: Int!
+  cardTypeId: Int
 
 }
 
@@ -176,13 +176,13 @@ type LogCardTypeLoaded @entity {
 
  network: Int
 
- blockTimestamp: Date!
+ blockTimestamp: Date
 
- cardTypeId: Int!
+ cardTypeId: Int
 
  cardTypeName: String
 
- editionTotal: BigInt!
+ editionTotal: BigInt
 }
 
 type LogPackOpened @entity {
@@ -190,11 +190,11 @@ type LogPackOpened @entity {
 
  network: Int
 
- blockTimestamp: Date!
+ blockTimestamp: Date
 
- buyer: String!
+ buyer: String
 
- rarity: Int!
+ rarity: Int
 }
 
 type LogSponsorLinked @entity {
@@ -202,11 +202,11 @@ type LogSponsorLinked @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  sponsor: String!
+  sponsor: String
 
-  affiliate: String!
+  affiliate: String
 }
 
 type LogSponsorReward @entity {
@@ -214,13 +214,13 @@ type LogSponsorReward @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  sponsor: String!
+  sponsor: String
 
-  affiliate: String!
+  affiliate: String
 
-  zoomReward: BigInt!
+  zoomReward: BigInt
 }
 
 type LogDailyReward @entity {
@@ -228,11 +228,11 @@ type LogDailyReward @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  player: String!
+  player: String
 
-  newBoosterBalance: BigInt!
+  newBoosterBalance: BigInt
 }
 
 type LogRewardBooster @entity {
@@ -240,11 +240,11 @@ type LogRewardBooster @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  winner: String!
+  winner: String
 
-  boostersAwarded: BigInt!
+  boostersAwarded: BigInt
 }
 
 type LogSacrificeNFT @entity {
@@ -252,15 +252,15 @@ type LogSacrificeNFT @entity {
 
   network: Int
 
-  blockTimestamp: Date!
+  blockTimestamp: Date
 
-  owner: String!
+  owner: String
 
-  tokenId: BigInt!
+  tokenId: BigInt
 
-  cardTypeId: BigInt!
+  cardTypeId: BigInt
 
-  zoomGained: BigInt!
+  zoomGained: BigInt
 }
 
 type NftTransfer @entity {
@@ -268,13 +268,13 @@ type NftTransfer @entity {
 
  network: Int
 
- blockTimestamp: Date!
+ blockTimestamp: Date
 
- from: String!
+ from: String
 
  to: String!
 
- tokenId: BigInt!
+ tokenId: BigInt
 }
 
 type BridgedZoom @entity {
@@ -284,11 +284,11 @@ type BridgedZoom @entity {
  
  blockNumber: Int
 
- blockTimestamp: Date!
+ blockTimestamp: Date
 
- tx: String!
+ tx: String
 
- nakamaUserId: String!
+ nakamaUserId: String
 
- amount: BigInt!
+ amount: BigInt
 }

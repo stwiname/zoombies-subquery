@@ -18,11 +18,11 @@ export class LogRewardBooster implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public winner: string;
+    public winner?: string;
 
-    public boostersAwarded: bigint;
+    public boostersAwarded?: bigint;
 
 
     get _name(): string {

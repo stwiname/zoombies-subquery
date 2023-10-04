@@ -57,7 +57,7 @@ dataSources:
               - null
               - null
               - null
-        - handler: handleZoomScoreUpdatedEvent
+        - handler: moonbeamHandleZoomScoreUpdatedEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:

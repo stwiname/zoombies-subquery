@@ -18,11 +18,11 @@ export class LogDailyReward implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public player: string;
+    public player?: string;
 
-    public newBoosterBalance: bigint;
+    public newBoosterBalance?: bigint;
 
 
     get _name(): string {

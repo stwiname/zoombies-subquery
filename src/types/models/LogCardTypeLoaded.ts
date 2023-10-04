@@ -18,13 +18,13 @@ export class LogCardTypeLoaded implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public cardTypeId: number;
+    public cardTypeId?: number;
 
     public cardTypeName?: string;
 
-    public editionTotal: bigint;
+    public editionTotal?: bigint;
 
 
     get _name(): string {

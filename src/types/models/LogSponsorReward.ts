@@ -18,13 +18,13 @@ export class LogSponsorReward implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public sponsor: string;
+    public sponsor?: string;
 
-    public affiliate: string;
+    public affiliate?: string;
 
-    public zoomReward: bigint;
+    public zoomReward?: bigint;
 
 
     get _name(): string {

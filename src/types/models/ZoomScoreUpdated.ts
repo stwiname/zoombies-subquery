@@ -18,9 +18,9 @@ export class ZoomScoreUpdated implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public owner: string;
+    public owner?: string;
 
     public newZoomScore?: bigint;
 

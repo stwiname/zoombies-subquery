@@ -20,13 +20,13 @@ export class BridgedZoom implements Entity {
 
     public blockNumber?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public tx: string;
+    public tx?: string;
 
-    public nakamaUserId: string;
+    public nakamaUserId?: string;
 
-    public amount: bigint;
+    public amount?: bigint;
 
 
     get _name(): string {

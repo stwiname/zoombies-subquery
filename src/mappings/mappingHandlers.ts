@@ -20,35 +20,40 @@ type LogSacrificeNFTEventArgs = [string, BigNumber, BigNumber, BigNumber] & {own
 type NFTTransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: bigint; };
 
 
-function createSum(id: string): Sum {
+function createSum(id: string, network:number): Sum {
   const entity = new Sum(id);
+  entity.network = network;
   entity.mintedTotal = BigInt(0);
   entity.burnedTotal = BigInt(0);
   return entity;
 }
 
-function createZoomInflation(timestamp: string): ZoomInflation {
+function createZoomInflation(timestamp: string, network:number): ZoomInflation {
   const entity = new ZoomInflation(timestamp);
+  entity.network = network;
   entity.total = BigInt(0);
   return entity;
 }
 
-function createTrackedPerDay(timestamp: string): ZoomPerDay {
+function createTrackedPerDay(timestamp: string, network:number): ZoomPerDay {
   const entity = new ZoomPerDay(timestamp);
+  entity.network = network;
   entity.minted = BigInt(0);
   entity.burned = BigInt(0);
   return entity;
 }
 
-function createNFTPerDay(timestamp: string): NFTPerDay {
+function createNFTPerDay(timestamp: string, network:number): NFTPerDay {
   const entity = new NFTPerDay(timestamp);
+  entity.network = network;
   entity.minted = BigInt(0);
   entity.burned = BigInt(0);
   return entity;
 }
 
-function createRarityPerDay(timestamp: string): RarityPerDay {
+function createRarityPerDay(timestamp: string, network:number): RarityPerDay {
   const entity = new RarityPerDay(timestamp);
+  entity.network = network;
   entity.diamond = BigInt(0);
   entity.platinum = BigInt(0);
   entity.epic = BigInt(0);
@@ -68,14 +73,16 @@ function createNFTHolders(wallet: string): NFTHolders {
   return entity;
 }
 
-function createSponsorAffiliate(wallet: string): SponsorAffiliateCount {
+function createSponsorAffiliate(wallet: string, network:number): SponsorAffiliateCount {
   const entity = new SponsorAffiliateCount(wallet);
+  entity.network = network;
   entity.affiliateCount = BigInt(0);
   return entity;
 }
 
-function createSponsorReward(wallet: string): SponsorRewardTotal {
+function createSponsorReward(wallet: string, network:number): SponsorRewardTotal {
   const entity = new SponsorRewardTotal(wallet);
+  entity.network = network;
   entity.rewardTotal = BigInt(0);
   return entity;
 }
@@ -99,7 +106,7 @@ async function handleTransfer(event: FrontierEvmEvent<TransferEventArgs>, networ
     //Create entity to hold TOTAL minted/burned per day
     let entity = await Sum.get("1");
     if(entity === undefined){
-      entity = createSum("1");
+      entity = createSum("1", network);
     }
 
     //Create entity to hold Summary minted/burned Per Day
@@ -108,13 +115,13 @@ async function handleTransfer(event: FrontierEvmEvent<TransferEventArgs>, networ
     // logger.info(date);
     let zpd = await ZoomPerDay.get(date);
     if(zpd === undefined){
-      zpd = createTrackedPerDay(date);
+      zpd = createTrackedPerDay(date, network);
     }
 
     //Create entity to hold TOTAL Cumulative minted/burned
     let inflation = await ZoomInflation.get(date);
     if(inflation === undefined){ //then get yeserday's inflation value
-      inflation = createZoomInflation(date);
+      inflation = createZoomInflation(date, network);
       const prevDay = new Date();
       prevDay.setTime(parseInt(date) - 86400000);
       const yesterday_timestamp = Date.parse(new Date(prevDay.getTime()).toISOString().split('T')[0]).toString();
@@ -183,8 +190,8 @@ async function handleZoomBurnedEvent(event: FrontierEvmEvent<ZoomBurnedEventArgs
   zoom.blockTimestamp = event.blockTimestamp;
   zoom.network = network;
   zoom.owner = event.args.owner;
-  zoom.totalZoomBurned = event.args.totalZoomBurned;
-  zoom.zoomBurned = event.args.amount;
+  zoom.totalZoomBurned = BigInt(event.args.totalZoomBurned);
+  zoom.zoomBurned = BigInt(event.args.amount);
 
   await zoom.save();
 }
@@ -201,7 +208,7 @@ async function handleLogCardTypeLoadedEvent(event: FrontierEvmEvent<LogCardTypeL
   card.network = network;
   card.cardTypeId = event.args.cardTypeId;
   card.cardTypeName = event.args.cardTypeName;
-  card.editionTotal = event.args.editionTotal;
+  card.editionTotal = BigInt(event.args.editionTotal);
   await card.save();
 }
 
@@ -216,10 +223,10 @@ async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventA
   card.blockTimestamp = event.blockTimestamp;
   card.network = network;
   card.buyer = event.args.buyer;
-  card.tokenId = event.args.tokenId;
+  card.tokenId = BigInt(event.args.tokenId);
   card.rarity = event.args.rarity;
   card.cardTypeId = event.args.cardTypeId;
-  card.editionNumber = event.args.editionNumber;
+  card.editionNumber = BigInt(event.args.editionNumber);
   card.isFoil = event.args.isFoil;
   await card.save();
 
@@ -236,7 +243,7 @@ async function handleLogCardMintedEvent(event: FrontierEvmEvent<CardMintedEventA
 
   let npd = await NFTPerDay.get(date);
   if(npd === undefined){
-    npd = createNFTPerDay(date);
+    npd = createNFTPerDay(date, network);
   }
   npd.minted = BigInt(npd.minted) + BigInt(1);
   await npd.save();
@@ -260,7 +267,7 @@ async function handleLogPackOpenedEvent(event: FrontierEvmEvent<LogPackOpenedEve
 
   let rpd = await RarityPerDay.get(date);
   if(rpd === undefined){
-    rpd = createRarityPerDay(date);
+    rpd = createRarityPerDay(date, network);
   }
 
   switch (event.args.rarity) {
@@ -308,7 +315,7 @@ async function handleLogSponsorLinkedEvent(event: FrontierEvmEvent<LogSponsorLin
 
   let isSponsor = await SponsorAffiliateCount.get(sponsor.sponsor);
   if(isSponsor === undefined){
-    isSponsor = createSponsorAffiliate(sponsor.sponsor);
+    isSponsor = createSponsorAffiliate(sponsor.sponsor, network);
   }
 
   isSponsor.affiliateCount += BigInt(1);
@@ -327,13 +334,13 @@ async function handleLogSponsorRewardEvent(event: FrontierEvmEvent<LogSponsorRew
   reward.network = network;
   reward.sponsor = event.args.sponsor;
   reward.affiliate = event.args.affiliate;
-  reward.zoomReward = event.args.zoomReward;
+  reward.zoomReward = BigInt(event.args.zoomReward);
 
   await reward.save();
 
   let isSponsor = await SponsorRewardTotal.get(reward.sponsor);
   if(isSponsor === undefined){
-    isSponsor = createSponsorReward(reward.sponsor);
+    isSponsor = createSponsorReward(reward.sponsor, network);
   }
   
   isSponsor.rewardTotal += BigInt(reward.zoomReward);
@@ -351,7 +358,7 @@ async function handleLogDailyRewardEvent(event: FrontierEvmEvent<LogDailyRewardE
   reward.network = network;
   reward.blockTimestamp = event.blockTimestamp;
   reward.player = event.args.player;
-  reward.newBoosterBalance = event.args.newBoosterBalance;
+  reward.newBoosterBalance = BigInt(event.args.newBoosterBalance);
 
   await reward.save();
 }
@@ -367,7 +374,7 @@ async function handleLogRewardBoostersEvent(event: FrontierEvmEvent<LogRewardBoo
   reward.blockTimestamp = event.blockTimestamp;
   reward.network = network;
   reward.winner = event.args.winner;
-  reward.boostersAwarded = event.args.boostersAwarded;
+  reward.boostersAwarded = BigInt(event.args.boostersAwarded);
 
   await reward.save();
 }
@@ -383,9 +390,9 @@ async function handleLogSacrificeNFTEvent(event: FrontierEvmEvent<LogSacrificeNF
   sac.blockTimestamp = event.blockTimestamp;
   sac.network = network;
   sac.owner = event.args.owner;
-  sac.tokenId = event.args.tokenId;
-  sac.cardTypeId = event.args.cardTypeId;
-  sac.zoomGained = event.args.zoomGained;
+  sac.tokenId = BigInt(event.args.tokenId);
+  sac.cardTypeId = BigInt(event.args.cardTypeId);
+  sac.zoomGained = BigInt(event.args.zoomGained);
 
   await sac.save();
 }
@@ -403,7 +410,7 @@ async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventAr
   nftTransfer.network = network;
   nftTransfer.from = event.args.from;
   nftTransfer.to = event.args.to;
-  nftTransfer.tokenId = event.args.tokenId;
+  nftTransfer.tokenId = BigInt(event.args.tokenId);
 
   await nftTransfer.save();
 

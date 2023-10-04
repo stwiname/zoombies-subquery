@@ -18,17 +18,17 @@ export class LogCardMinted implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public buyer: string;
+    public buyer?: string;
 
-    public tokenId: bigint;
+    public tokenId?: bigint;
 
-    public rarity: number;
+    public rarity?: number;
 
-    public cardTypeId: number;
+    public cardTypeId?: number;
 
-    public editionNumber: bigint;
+    public editionNumber?: bigint;
 
     public isFoil?: boolean;
 

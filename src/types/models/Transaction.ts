@@ -18,15 +18,15 @@ export class Transaction implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public value: bigint;
+    public value?: bigint;
 
-    public to: string;
+    public to?: string;
 
-    public from: string;
+    public from?: string;
 
-    public contractAddress: string;
+    public contractAddress?: string;
 
 
     get _name(): string {

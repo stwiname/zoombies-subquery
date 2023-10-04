@@ -18,15 +18,15 @@ export class LogSacrificeNFT implements Entity {
 
     public network?: number;
 
-    public blockTimestamp: Date;
+    public blockTimestamp?: Date;
 
-    public owner: string;
+    public owner?: string;
 
-    public tokenId: bigint;
+    public tokenId?: bigint;
 
-    public cardTypeId: bigint;
+    public cardTypeId?: bigint;
 
-    public zoomGained: bigint;
+    public zoomGained?: bigint;
 
 
     get _name(): string {
