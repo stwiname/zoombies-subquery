@@ -436,7 +436,6 @@ async function handleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEve
   const bridgedZoom = new BridgedZoom(event.transactionHash);
   bridgedZoom.blockTimestamp = event.blockTimestamp;
   bridgedZoom.network = network;
-  bridgedZoom.tx = event.args.tx;
   bridgedZoom.nakamaUserId = event.args.nakamaUserId;
   bridgedZoom.amount = BigInt(event.args.amount);
 

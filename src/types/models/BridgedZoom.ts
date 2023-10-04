@@ -18,11 +18,7 @@ export class BridgedZoom implements Entity {
 
     public network?: number;
 
-    public blockNumber?: number;
-
     public blockTimestamp?: Date;
-
-    public tx?: string;
 
     public nakamaUserId?: string;
 

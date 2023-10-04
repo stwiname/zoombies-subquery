@@ -141,10 +141,10 @@ dataSources:
       file: ./node_modules/@subql/frontier-evm-processor/dist/bundle.js
       options:
         # Must be a key of assets
-        abi: "ZoomBridge"
+        abi: zoomBridge
         address: "0x9De15E605cF50A86269Eb856FC979689E9443D63"
     assets:
-      erc20:
+      zoomBridge:
         file: "./ZoomBridge.json"
     mapping:
       file: './dist/index.js'
