@@ -134,4 +134,23 @@ dataSources:
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
-              - LogCardTypeLoaded(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal)             
+              - LogBridgedZoom(uint32 indexed cardTypeId, string cardTypeName, uint editionTotal)                 
+  - kind: substrate/FrontierEvm
+    startBlock: 5013584
+    processor:
+      file: ./node_modules/@subql/frontier-evm-processor/dist/bundle.js
+      options:
+        # Must be a key of assets
+        abi: "ZoomBridge"
+        address: "0x9De15E605cF50A86269Eb856FC979689E9443D63"
+    assets:
+      erc20:
+        file: "./ZoomBridge.json"
+    mapping:
+      file: './dist/index.js'
+      handlers:
+        - handler: moonbaseHandleBridgedZoomEventArgs
+          kind: substrate/FrontierEvmEvent
+          filter:
+            topics:
+                - zoomBridged(uint256 zoomAmount, string playerUUID);

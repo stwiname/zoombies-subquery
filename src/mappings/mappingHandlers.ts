@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomInflation,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal} from "../types";
+import {Transaction,Sum,ZoomInflation,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal,BridgedZoom} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -18,6 +18,7 @@ type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterB
 type LogRewardBoostersEventArgs = [string, BigNumber] & {winner:string, boostersAwarded:bigint; };
 type LogSacrificeNFTEventArgs = [string, BigNumber, BigNumber, BigNumber] & {owner:string, tokenId:bigint, cardTypeId:bigint, zoomGained:bigint; };
 type NFTTransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: bigint; };
+type BridgedZoomEventArgs = [string, string, BigNumber] & { tx: string; nakamaUserId: string; amount: bigint; };
 
 
 function createSum(id: string, network:number): Sum {
@@ -420,4 +421,24 @@ async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventAr
   }
 
   await isHolder.save();
+}
+
+
+export async function moonbeamHandleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
+  handleBridgedZoomEventArgs(event, 1284);
+}
+
+export async function moonbaseHandleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
+  handleBridgedZoomEventArgs(event, 1287);
+}
+
+async function handleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>, network:number): Promise<void> {
+  const bridgedZoom = new BridgedZoom(event.transactionHash);
+  bridgedZoom.blockTimestamp = event.blockTimestamp;
+  bridgedZoom.network = network;
+  bridgedZoom.tx = event.args.tx;
+  bridgedZoom.nakamaUserId = event.args.nakamaUserId;
+  bridgedZoom.amount = BigInt(event.args.amount);
+
+  await bridgedZoom.save();
 }
