@@ -173,8 +173,8 @@ async function zoomScoreUpdatedEvent(event: FrontierEvmEvent<ZoomScoreUpdatedEve
   zoom.blockTimestamp = event.blockTimestamp;
   zoom.network = network;
   zoom.owner = event.args.owner;
-  zoom.newZoomScore = event.args.newZoomScore;
-  zoom.zoomGained = event.args.amount;
+  zoom.newZoomScore = BigInt(event.args.newZoomScore);
+  zoom.zoomGained = BigInt(event.args.amount);
 
   await zoom.save();
 }
