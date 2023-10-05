@@ -44,5 +44,5 @@ export {LogSacrificeNFT} from "./LogSacrificeNFT"
 
 export {NftTransfer} from "./NftTransfer"
 
-export {BridgedZoom} from "./BridgedZoom"
+export {ZoomBridged} from "./ZoomBridged"
 

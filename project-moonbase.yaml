@@ -21,7 +21,7 @@ network:
 
 dataSources:
   - kind: substrate/FrontierEvm
-    startBlock: 4147225
+    startBlock: 5013584
     processor:
       file: ./node_modules/@subql/frontier-evm-processor/dist/bundle.js
       options:
@@ -68,7 +68,8 @@ dataSources:
             topics:
                 - zoomBurned(address owner, uint256 totalZoomBurned, uint256 amount);
   - kind: substrate/FrontierEvm
-    startBlock: 4147225
+    # startBlock: 4147225
+    startBlock: 5013584
     processor:
       file: './node_modules/@subql/frontier-evm-processor/dist/bundle.js'
       options:
@@ -141,15 +142,15 @@ dataSources:
       file: ./node_modules/@subql/frontier-evm-processor/dist/bundle.js
       options:
         # Must be a key of assets
-        abi: zoomBridge
+        abi: "ZoomBridge"
         address: "0x9De15E605cF50A86269Eb856FC979689E9443D63"
     assets:
-      zoomBridge:
+      ZoomBridge:
         file: "./ZoomBridge.json"
     mapping:
       file: './dist/index.js'
       handlers:
-        - handler: moonbaseHandleBridgedZoomEventArgs
+        - handler: moonbaseHandleBridgedZoomEvent
           kind: substrate/FrontierEvmEvent
           filter:
             topics:

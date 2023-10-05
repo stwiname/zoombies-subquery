@@ -1,4 +1,4 @@
-import {Transaction,Sum,ZoomInflation,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal,BridgedZoom} from "../types";
+import {Transaction,Sum,ZoomInflation,ZoomPerDay,ZoomScoreUpdated,ZoomBurned,NFTPerDay,RarityPerDay,LogCardTypeLoaded,LogCardMinted,MintedType,LogPackOpened,LogSponsorLinked,LogSponsorReward,LogDailyReward,LogRewardBooster,LogSacrificeNFT,NftTransfer, NFTHolders,SponsorAffiliateCount,SponsorRewardTotal,ZoomBridged} from "../types";
 import {
   FrontierEvmEvent,
   FrontierEvmCall,
@@ -18,7 +18,7 @@ type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterB
 type LogRewardBoostersEventArgs = [string, BigNumber] & {winner:string, boostersAwarded:bigint; };
 type LogSacrificeNFTEventArgs = [string, BigNumber, BigNumber, BigNumber] & {owner:string, tokenId:bigint, cardTypeId:bigint, zoomGained:bigint; };
 type NFTTransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: bigint; };
-type BridgedZoomEventArgs = [string, string, BigNumber] & { tx: string; nakamaUserId: string; amount: bigint; };
+type BridgedZoomEventArgs = [string, BigNumber] & { playerUUID: string; amount: bigint; };
 
 
 function createSum(id: string, network:number): Sum {
@@ -424,20 +424,26 @@ async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventAr
 }
 
 
-export async function moonbeamHandleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
-  handleBridgedZoomEventArgs(event, 1284);
-}
+// export async function moonbeamHandleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
+//   handleBridgedZoomEventArgs(event, 1284);
+// }
 
-export async function moonbaseHandleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
+export async function moonbaseHandleBridgedZoomEvent(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
+  console.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!moonbaseHandleBridgedZoomEvent", moonbaseHandleBridgedZoomEvent);
   handleBridgedZoomEventArgs(event, 1287);
 }
 
 async function handleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEventArgs>, network:number): Promise<void> {
-  const bridgedZoom = new BridgedZoom(event.transactionHash);
-  bridgedZoom.blockTimestamp = event.blockTimestamp;
-  bridgedZoom.network = network;
-  bridgedZoom.nakamaUserId = event.args.nakamaUserId;
-  bridgedZoom.amount = BigInt(event.args.amount);
+  try {
+    const bridgedZoom = new ZoomBridged(event.transactionHash);
+    bridgedZoom.blockTimestamp = event.blockTimestamp;
+    bridgedZoom.network = network;
+    bridgedZoom.playerUUID = event.args.playerUUID;
+    bridgedZoom.amount = BigInt(event.args.amount);
+  
+    await bridgedZoom.save();
+  } catch (error) {
+    console.error("handleBridgedZoomEventArgs:",error);
+  }
 
-  await bridgedZoom.save();
 }

@@ -277,14 +277,14 @@ type NftTransfer @entity {
  tokenId: BigInt
 }
 
-type BridgedZoom @entity {
+type ZoomBridged @entity {
  id:ID!
 
  network: Int
 
  blockTimestamp: Date
 
- nakamaUserId: String
+ playerUUID: String
 
  amount: BigInt
 }
