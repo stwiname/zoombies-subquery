@@ -18,7 +18,7 @@ type LogDailyRewardEventArgs = [string, BigNumber] & {player:string, newBoosterB
 type LogRewardBoostersEventArgs = [string, BigNumber] & {winner:string, boostersAwarded:bigint; };
 type LogSacrificeNFTEventArgs = [string, BigNumber, BigNumber, BigNumber] & {owner:string, tokenId:bigint, cardTypeId:bigint, zoomGained:bigint; };
 type NFTTransferEventArgs = [string, string, BigNumber] & { from: string; to: string; tokenId: bigint; };
-type BridgedZoomEventArgs = [string, BigNumber] & { playerUUID: string; amount: bigint; };
+type BridgedZoomEventArgs = [string, BigNumber] & { playerUUID: string; zoomAmount: bigint; };
 
 
 function createSum(id: string, network:number): Sum {
@@ -429,7 +429,7 @@ async function handleNFTTransferEvent(event: FrontierEvmEvent<NFTTransferEventAr
 // }
 
 export async function moonbaseHandleBridgedZoomEvent(event: FrontierEvmEvent<BridgedZoomEventArgs>): Promise<void> {
-  console.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!moonbaseHandleBridgedZoomEvent", moonbaseHandleBridgedZoomEvent);
+  logger.warn(`!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!moonbaseHandleBridgedZoomEvent`);
   handleBridgedZoomEventArgs(event, 1287);
 }
 
@@ -439,11 +439,10 @@ async function handleBridgedZoomEventArgs(event: FrontierEvmEvent<BridgedZoomEve
     bridgedZoom.blockTimestamp = event.blockTimestamp;
     bridgedZoom.network = network;
     bridgedZoom.playerUUID = event.args.playerUUID;
-    bridgedZoom.amount = BigInt(event.args.amount);
+    bridgedZoom.amount = BigInt(event.args.zoomAmount);
   
     await bridgedZoom.save();
   } catch (error) {
-    console.error("handleBridgedZoomEventArgs:",error);
+    logger.error(error, "handleBridgedZoomEventArgs:");
   }
-
 }

@@ -154,4 +154,4 @@ dataSources:
           kind: substrate/FrontierEvmEvent
           filter:
             topics:
-                - zoomBridged(uint256 zoomAmount, string playerUUID);
+                - zoomBridged(uint256 zoomAmount, string playerUUID)
